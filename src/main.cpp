@@ -3,11 +3,12 @@
 
 int main()
 {
-    float PosX = 0;
-    float PosY = 0;
-
     auto window = sf::RenderWindow(sf::VideoMode({1920u, 1080u}), "CMake SFML Project");
     window.setFramerateLimit(60);
+
+    sf::RectangleShape rectangle;
+    rectangle.setSize({10, 10});
+    rectangle.setFillColor(sf::Color::White);
 
     while (window.isOpen())
     {
@@ -21,29 +22,24 @@ int main()
 
         window.clear(sf::Color::Black);
         // Draw here
-        // draw a random shape
-
-        sf::RectangleShape rectangle;
-        rectangle.setSize({10, 10});
-        rectangle.setFillColor(sf::Color::White);
-        rectangle.setPosition({PosX, PosY});
-        window.draw(rectangle);
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
         {
-            PosX++;
+            rectangle.setPosition({rectangle.getPosition().x + 1, rectangle.getPosition().y});
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
         {
-            PosX--;
+            rectangle.setPosition({rectangle.getPosition().x - 1, rectangle.getPosition().y});
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
         {
-            PosY--;
+            rectangle.setPosition({rectangle.getPosition().x, rectangle.getPosition().y - 1});
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) {
-            PosY++;
+            rectangle.setPosition({rectangle.getPosition().x, rectangle.getPosition().y + 1});
         }
+
+        window.draw(rectangle);
 
         window.display();
     }
