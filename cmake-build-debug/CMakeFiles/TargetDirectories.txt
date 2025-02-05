@@ -1,3 +1,0 @@
-/Users/friedricht/CLionProjects/CPP-HWR-SoSe-2025/cmake-build-debug/CMakeFiles/CPP_HWR_SoSe_2025.dir
-/Users/friedricht/CLionProjects/CPP-HWR-SoSe-2025/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/friedricht/CLionProjects/CPP-HWR-SoSe-2025/cmake-build-debug/CMakeFiles/rebuild_cache.dir
