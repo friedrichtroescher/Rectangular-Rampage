@@ -1,8 +1,7 @@
-cmake_minimum_required(VERSION 3.26)
-project(CPP_HWR_SoSe_2025)
+cmake_minimum_required(VERSION 3.28)
+project(CMakeSFMLProject LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 include(FetchContent)
 FetchContent_Declare(SFML
@@ -13,6 +12,6 @@ FetchContent_Declare(SFML
     SYSTEM)
 FetchContent_MakeAvailable(SFML)
 
-add_executable(CPP_HWR_SoSe_2025 main.cpp)
-target_compile_features(CPP_HWR_SoSe_2025 PRIVATE cxx_std_17)
-target_link_libraries(CPP_HWR_SoSe_2025 PRIVATE SFML::Graphics)
+add_executable(main src/main.cpp)
+target_compile_features(main PRIVATE cxx_std_17)
+target_link_libraries(main PRIVATE SFML::Graphics)
