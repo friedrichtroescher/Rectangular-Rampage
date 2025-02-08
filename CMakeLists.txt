@@ -15,6 +15,9 @@ FetchContent_MakeAvailable(SFML)
 add_executable(main src/main.cpp
         src/Projectile.cpp
         src/include/Projectile.h
+        src/Player.cpp
+        src/include/Player.h
+        src/include/Direction.h
 )
 target_compile_features(main PRIVATE cxx_std_17)
 target_link_libraries(main PRIVATE SFML::Graphics)
