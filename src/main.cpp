@@ -1,92 +1,52 @@
 #include <SFML/Graphics.hpp>
-#include <vector>
 #include <algorithm>
-#include "include/Projectile.h"
+#include "include/Player.h"
 
-#define playerCenter
+#define WALKINGSPEED 1
 
 int main() {
+    //window initialization
     auto window = sf::RenderWindow(sf::VideoMode({1920u, 1080u}), "CMake SFML Project");
     window.setFramerateLimit(60);
 
-    sf::RectangleShape player;
-    char playerDirection = 'r';
 
-    player.setSize({10, 10});
-    player.setFillColor(sf::Color::White);
+    Player player({10, 10}, {960, 540}, sf::Color::White, 100, 0);
 
-    std::vector<Projectile> projectiles;
 
     while (window.isOpen()) {
+        // Standard SFML event loop
         while (const std::optional event = window.pollEvent()) {
             if (event->is<sf::Event::Closed>()) {
                 window.close();
             }
         }
 
+        // initialize a new Frame
         window.clear(sf::Color::Black);
+
+
         // Draw here
 
+        //update projectiles
+        player.tick();
+
+        //Walking movement
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)) {
-            player.move({1, 0});
-            playerDirection = 'r';
+            player.walk(Direction::RIGHT, WALKINGSPEED);
         } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) {
-            player.move({-1, 0});
-            playerDirection = 'l';
+            player.walk(Direction::LEFT, WALKINGSPEED);
         } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)) {
-            player.move({0, -1});
-            playerDirection = 'u';
+            player.walk(Direction::UP, WALKINGSPEED);
         } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) {
-            player.move({0, 1});
-            playerDirection = 'd';
+            player.walk(Direction::DOWN, WALKINGSPEED);
         }
 
+        //Shooting mechanics
         if (sf::Keyboard::isKeyPressed((sf::Keyboard::Key::Space))) {
-            // map playerDirection to velocity
-            sf::Vector2f velocity;
-            switch (playerDirection) {
-                case 'r':
-                    velocity = {2, 0};
-                    break;
-                case 'l':
-                    velocity = {-2, 0};
-                    break;
-                case 'u':
-                    velocity = {0, -2};
-                    break;
-                case 'd':
-                    velocity = {0, 2};
-                    break;
-            }
-
-            Projectile projectile = (Projectile({4, 4}, {player.getPosition().x + (player.getSize().x -
-                                                                                   projectile.getSize().x) /
-                                                                                  2,
-                                                         player.getPosition().y + (player.getSize().y -
-                                                                                   projectile.getSize().y) /
-                                                                                  2},
-                                                sf::Color::Red,
-                                                velocity, 120));
-
-            projectiles.push_back(
-                    projectile);
+            player.shoot({3, 3}, 60, sf::Color::Red, 3);
         }
 
-        for (auto &projectile: projectiles) {
-            auto new_end = std::remove_if(projectiles.begin(), projectiles.end(), [](Projectile projectile) {
-                return projectile.getTimeout() <= 0;
-            });
-            projectiles.erase(new_end, projectiles.end());
-
-
-            projectile.setTimeout(projectile.getTimeout() - 1);
-
-            projectile.move(projectile.getVelocity());
-
-            window.draw(projectile);
-        }
-
-        window.draw(player);
+        player.draw(window);
 
         window.display();
     }
