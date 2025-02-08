@@ -46,7 +46,7 @@ void Player::setProjectiles(std::vector<Projectile> projectiles) {
     this->projectiles = projectiles;
 }
 
-sf::Vector2f Player::getProjectileVelocity(float speed) {
+sf::Vector2f Player::getProjectileDirection(float speed) {
     switch (getDirection()) {
         case Direction::RIGHT:
             return {speed, 0};
@@ -72,7 +72,7 @@ void Player::shoot(sf::Vector2f projectileSize, int timeout, sf::Color color, fl
                                                                             projectileSize.y) /
                                                                            2.f},
                                         color,
-                                        this->getProjectileVelocity(speed), timeout));
+                                        this->getProjectileDirection(speed), timeout));
 
     projectiles.push_back(projectile);
 

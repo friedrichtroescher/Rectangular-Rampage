@@ -42,7 +42,7 @@ public:
     void walk(Direction direction, float distance);
 
 protected:
-    sf::Vector2f getProjectileVelocity(float speed);
+    sf::Vector2f getProjectileDirection(float speed);
 
     void setLastReloadLength(int lastReloadLength);
 
