@@ -66,11 +66,11 @@ void Player::shoot(sf::Vector2f projectileSize, int timeout, sf::Color color, fl
         return;
     }
     Projectile projectile = (Projectile(projectileSize, {getPosition().x + (getSize().x -
-                                                                            projectile.getSize().x) /
-                                                                           2,
+                                                                            projectileSize.x) /
+                                                                           2.f,
                                                          getPosition().y + (getSize().y -
-                                                                            projectile.getSize().y) /
-                                                                           2},
+                                                                            projectileSize.y) /
+                                                                           2.f},
                                         color,
                                         this->getProjectileVelocity(speed), timeout));
 

@@ -2,7 +2,7 @@
 #include <algorithm>
 #include "include/Player.h"
 
-#define WALKINGSPEED 1
+#define WALKINGSPEED 3
 
 int main() {
     //window initialization
@@ -43,7 +43,7 @@ int main() {
 
         //Shooting mechanics
         if (sf::Keyboard::isKeyPressed((sf::Keyboard::Key::Space))) {
-            player.shoot({3, 3}, 60, sf::Color::Red, 3);
+            player.shoot({4, 4}, 60, sf::Color::Red, 2 * WALKINGSPEED);
         }
 
         player.draw(window);
