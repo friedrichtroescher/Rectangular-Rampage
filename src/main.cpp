@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <algorithm>
-#include "MovingRectangle.h"
+#include "Projectile.h"
 
 #define playerCenter
 
@@ -15,7 +15,7 @@ int main() {
     player.setSize({10, 10});
     player.setFillColor(sf::Color::White);
 
-    std::vector<MovingRectangle> projectiles;
+    std::vector<Projectile> projectiles;
 
     while (window.isOpen()) {
         while (const std::optional event = window.pollEvent()) {
@@ -59,21 +59,21 @@ int main() {
                     break;
             }
 
-            MovingRectangle projectile = (MovingRectangle({4, 4}, {player.getPosition().x + (player.getSize().x -
-                                                                                             projectile.getSize().x) /
-                                                                                            2,
-                                                                   player.getPosition().y + (player.getSize().y -
-                                                                                             projectile.getSize().y) /
-                                                                                            2},
-                                                          sf::Color::Red,
-                                                          velocity, 120));
+            Projectile projectile = (Projectile({4, 4}, {player.getPosition().x + (player.getSize().x -
+                                                                                   projectile.getSize().x) /
+                                                                                  2,
+                                                         player.getPosition().y + (player.getSize().y -
+                                                                                   projectile.getSize().y) /
+                                                                                  2},
+                                                sf::Color::Red,
+                                                velocity, 120));
 
             projectiles.push_back(
                     projectile);
         }
 
         for (auto &projectile: projectiles) {
-            auto new_end = std::remove_if(projectiles.begin(), projectiles.end(), [](MovingRectangle projectile) {
+            auto new_end = std::remove_if(projectiles.begin(), projectiles.end(), [](Projectile projectile) {
                 return projectile.getTimeout() <= 0;
             });
             projectiles.erase(new_end, projectiles.end());

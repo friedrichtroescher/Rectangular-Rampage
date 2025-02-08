@@ -2,15 +2,15 @@
 // Created by Friedrich Tröscher on 05.02.25.
 //
 
-#ifndef CMAKESFMLPROJECT_MOVINGRECTANGLE_H
-#define CMAKESFMLPROJECT_MOVINGRECTANGLE_H
+#ifndef CMAKESFMLPROJECT_PROJECTILE_H
+#define CMAKESFMLPROJECT_PROJECTILE_H
 
 #include <SFML/Graphics.hpp>
 
-class MovingRectangle : public sf::RectangleShape {
+class Projectile : public sf::RectangleShape {
 public:
     //Constructor
-    MovingRectangle(sf::Vector2f size, sf::Vector2f position, sf::Color color, sf::Vector2f velocity, int timeout);
+    Projectile(sf::Vector2f size, sf::Vector2f position, sf::Color color, sf::Vector2f velocity, int timeout);
 
     //Getters
     sf::Vector2f getVelocity();
@@ -30,4 +30,4 @@ private:
 };
 
 
-#endif //CMAKESFMLPROJECT_MOVINGRECTANGLE_H
+#endif //CMAKESFMLPROJECT_PROJECTILE_H
