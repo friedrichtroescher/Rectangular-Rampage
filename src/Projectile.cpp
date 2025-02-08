@@ -2,7 +2,7 @@
 // Created by Friedrich Tröscher on 05.02.25.
 //
 
-#include "Projectile.h"
+#include "include/Projectile.h"
 
 Projectile::Projectile(sf::Vector2f size, sf::Vector2f position, sf::Color color, sf::Vector2f velocity,
                        int timeout) {
