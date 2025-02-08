@@ -43,7 +43,7 @@ int main() {
 
         //Shooting mechanics
         if (sf::Keyboard::isKeyPressed((sf::Keyboard::Key::Space))) {
-            player.shoot({4, 4}, 60, sf::Color::Red, 2 * WALKINGSPEED);
+            player.shoot({4, 4}, 60, sf::Color::Red, 2 * WALKINGSPEED, 30);
         }
 
         player.draw(window);

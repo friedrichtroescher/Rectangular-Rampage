@@ -60,7 +60,7 @@ sf::Vector2f Player::getProjectileVelocity(float speed) {
 
 };
 
-void Player::shoot(sf::Vector2f projectileSize, int timeout, sf::Color color, float speed) {
+void Player::shoot(sf::Vector2f projectileSize, int timeout, sf::Color color, float speed, int reloadTime) {
     //don't shoot if player is reloading
     if (getReloadTime() > 0) {
         return;
@@ -76,13 +76,22 @@ void Player::shoot(sf::Vector2f projectileSize, int timeout, sf::Color color, fl
 
     projectiles.push_back(projectile);
 
-    this->setReloadTime(30);
+    setLastReloadLength(reloadTime);
+    setReloadTime(reloadTime);
 }
 
 void Player::tick() {
     //update player shooting timeout
     if (getReloadTime() > 0) {
         setReloadTime(getReloadTime() - 1);
+        int reloadTime = getReloadTime();
+        int lastReloadLength = getLastReloadLength();
+        sf::Color reloadingColor = sf::Color(
+                sf::Color(255, 255 - (float(getReloadTime()) / float(getLastReloadLength())) * 255.f,
+                          255 - (float(getReloadTime()) / float(getLastReloadLength())) * 255.f, 255));
+        setFillColor(reloadingColor);
+    } else {
+        setFillColor(sf::Color::White);
     }
 
     //update all projectiles
@@ -128,4 +137,12 @@ void Player::draw(sf::RenderWindow &window) {
     for (auto &projectile: projectiles) {
         window.draw(projectile);
     }
+}
+
+void Player::setLastReloadLength(int lastReloadLength) {
+    this->lastReloadLength = lastReloadLength;
+}
+
+int Player::getLastReloadLength() {
+    return lastReloadLength;
 }

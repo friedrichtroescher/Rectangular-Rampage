@@ -33,7 +33,7 @@ public:
 
     void setProjectiles(std::vector<Projectile> projectiles);
 
-    void shoot(sf::Vector2f projectileSize, int timeout, sf::Color color, float speed);
+    void shoot(sf::Vector2f projectileSize, int timeout, sf::Color color, float speed, int reloadTime);
 
     void tick();
 
@@ -44,11 +44,16 @@ public:
 protected:
     sf::Vector2f getProjectileVelocity(float speed);
 
+    void setLastReloadLength(int lastReloadLength);
+
+    int getLastReloadLength();
+
 private:
     int health{};
     int reloadTime{};
     Direction direction;
     std::vector<Projectile> projectiles;
+    int lastReloadLength;
 };
 
 
