@@ -2,8 +2,6 @@
 #include <algorithm>
 #include "include/Player.h"
 
-#define WALKINGSPEED 3
-
 int main() {
     //window initialization
     auto window = sf::RenderWindow(sf::VideoMode({1920u, 1080u}), "CMake SFML Project");
@@ -27,24 +25,8 @@ int main() {
 
         // Draw here
 
-        //update projectiles
+        //Movement, Shooting etc update for player
         player.tick();
-
-        //Walking movement
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)) {
-            player.walk(Direction::RIGHT, WALKINGSPEED);
-        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) {
-            player.walk(Direction::LEFT, WALKINGSPEED);
-        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)) {
-            player.walk(Direction::UP, WALKINGSPEED);
-        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) {
-            player.walk(Direction::DOWN, WALKINGSPEED);
-        }
-
-        //Shooting mechanics
-        if (sf::Keyboard::isKeyPressed((sf::Keyboard::Key::Space))) {
-            player.shoot({4, 4}, 60, sf::Color::Red, 2 * WALKINGSPEED, 30);
-        }
 
         player.draw(window);
 

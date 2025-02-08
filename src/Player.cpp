@@ -3,6 +3,7 @@
 //
 
 #include "include/Player.h"
+#include "include/Input.h"
 #include <SFML/Graphics.hpp>
 
 
@@ -46,20 +47,6 @@ void Player::setProjectiles(std::vector<Projectile> projectiles) {
     this->projectiles = projectiles;
 }
 
-sf::Vector2f Player::getProjectileDirection(float speed) {
-    switch (getDirection()) {
-        case Direction::RIGHT:
-            return {speed, 0};
-        case Direction::LEFT:
-            return {-speed, 0};
-        case Direction::UP:
-            return {0, -speed};
-        case Direction::DOWN:
-            return {0, speed};
-    }
-
-};
-
 void Player::shoot(sf::Vector2f projectileSize, int timeout, sf::Color color, float speed, int reloadTime) {
     //don't shoot if player is reloading
     if (getReloadTime() > 0) {
@@ -72,7 +59,7 @@ void Player::shoot(sf::Vector2f projectileSize, int timeout, sf::Color color, fl
                                                                             projectileSize.y) /
                                                                            2.f},
                                         color,
-                                        this->getProjectileDirection(speed), timeout));
+                                        Projectile::generateVelocity(getDirection(), 3), timeout));
 
     projectiles.push_back(projectile);
 
@@ -81,11 +68,9 @@ void Player::shoot(sf::Vector2f projectileSize, int timeout, sf::Color color, fl
 }
 
 void Player::tick() {
-    //update player shooting timeout
+    //update player shooting timeout and animation
     if (getReloadTime() > 0) {
         setReloadTime(getReloadTime() - 1);
-        int reloadTime = getReloadTime();
-        int lastReloadLength = getLastReloadLength();
         sf::Color reloadingColor = sf::Color(
                 sf::Color(255, 255 - (float(getReloadTime()) / float(getLastReloadLength())) * 255.f,
                           255 - (float(getReloadTime()) / float(getLastReloadLength())) * 255.f, 255));
@@ -106,25 +91,49 @@ void Player::tick() {
 
         projectile.move(projectile.getVelocity());
     }
+
+    //update player position
+    if (Input::getWASDDirection() != Direction::NONE) {
+        setDirection(Input::getWASDDirection());
+        walk(Input::getWASDDirection(), 3);
+    }
+
+    //shooting
+    if (Input::isShooting()) {
+        shoot({4, 4}, 60, sf::Color::Red, 2 * 3, 30);
+    }
+
 }
 
 void Player::walk(Direction direction, float distance) {
-    //set the direction field for later use
+    //set the direction field for later use, e.g. for shooting (or maybe a direction indicator?)
     this->setDirection(direction);
 
     //move the player in the given direction
     switch (direction) {
+        case Direction::UP:
+            move({0, -distance});
+            break;
+        case Direction::UP_RIGHT:
+            move({distance, -distance});
+            break;
         case Direction::RIGHT:
             move({distance, 0});
+            break;
+        case Direction::DOWN_RIGHT:
+            move({distance, distance});
+            break;
+        case Direction::DOWN:
+            move({0, distance});
+            break;
+        case Direction::DOWN_LEFT:
+            move({-distance, distance});
             break;
         case Direction::LEFT:
             move({-distance, 0});
             break;
-        case Direction::UP:
-            move({0, -distance});
-            break;
-        case Direction::DOWN:
-            move({0, distance});
+        case Direction::UP_LEFT:
+            move({-distance, -distance});
             break;
     }
 }
@@ -146,3 +155,5 @@ void Player::setLastReloadLength(int lastReloadLength) {
 int Player::getLastReloadLength() {
     return lastReloadLength;
 }
+
+

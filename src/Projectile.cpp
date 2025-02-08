@@ -28,3 +28,24 @@ int Projectile::getTimeout() {
 void Projectile::setTimeout(int timeout) {
     this->timeout = timeout;
 }
+
+sf::Vector2f Projectile::generateVelocity(Direction direction, float speed) {
+    switch (direction) {
+        case Direction::UP:
+            return {0, -speed};
+        case Direction::UP_RIGHT:
+            return {speed, -speed};
+        case Direction::RIGHT:
+            return {speed, 0};
+        case Direction::DOWN_RIGHT:
+            return {speed, speed};
+        case Direction::DOWN:
+            return {0, speed};
+        case Direction::DOWN_LEFT:
+            return {-speed, speed};
+        case Direction::LEFT:
+            return {-speed, 0};
+        case Direction::UP_LEFT:
+            return {-speed, -speed};
+    }
+}

@@ -42,8 +42,6 @@ public:
     void walk(Direction direction, float distance);
 
 protected:
-    sf::Vector2f getProjectileDirection(float speed);
-
     void setLastReloadLength(int lastReloadLength);
 
     int getLastReloadLength();
@@ -52,6 +50,7 @@ private:
     int health{};
     int reloadTime{};
     Direction direction;
+
     std::vector<Projectile> projectiles;
     int lastReloadLength;
 };

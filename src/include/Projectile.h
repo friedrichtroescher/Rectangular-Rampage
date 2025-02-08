@@ -6,6 +6,7 @@
 #define CMAKESFMLPROJECT_PROJECTILE_H
 
 #include <SFML/Graphics.hpp>
+#include "Direction.h"
 
 class Projectile : public sf::RectangleShape {
 public:
@@ -16,6 +17,8 @@ public:
     sf::Vector2f getVelocity();
 
     int getTimeout();
+
+    static sf::Vector2f generateVelocity(Direction direction, float speed);
 
     //Setters
     void setVelocity(sf::Vector2f velocity);
