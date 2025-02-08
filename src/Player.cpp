@@ -59,7 +59,7 @@ void Player::shoot(sf::Vector2f projectileSize, int timeout, sf::Color color, fl
                                                                             projectileSize.y) /
                                                                            2.f},
                                         color,
-                                        Projectile::generateVelocity(getDirection(), 3), timeout));
+                                        Projectile::generateVelocity(getDirection(), 10), timeout));
 
     projectiles.push_back(projectile);
 
