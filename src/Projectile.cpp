@@ -3,6 +3,7 @@
 //
 
 #include "include/Projectile.h"
+#include <cmath>
 
 Projectile::Projectile(sf::Vector2f size, sf::Vector2f position, sf::Color color, sf::Vector2f velocity,
                        int timeout) {
@@ -30,22 +31,23 @@ void Projectile::setTimeout(int timeout) {
 }
 
 sf::Vector2f Projectile::generateVelocity(Direction direction, float speed) {
+    auto sqrt2 = float(sqrt(2));
     switch (direction) {
         case Direction::UP:
             return {0, -speed};
         case Direction::UP_RIGHT:
-            return {speed, -speed};
+            return {speed / sqrt2, -speed / sqrt2};
         case Direction::RIGHT:
             return {speed, 0};
         case Direction::DOWN_RIGHT:
-            return {speed, speed};
+            return {speed / sqrt2, speed / sqrt2};
         case Direction::DOWN:
             return {0, speed};
         case Direction::DOWN_LEFT:
-            return {-speed, speed};
+            return {-speed / sqrt2, speed / sqrt2};
         case Direction::LEFT:
             return {-speed, 0};
         case Direction::UP_LEFT:
-            return {-speed, -speed};
+            return {-speed / sqrt2, -speed / sqrt2};
     }
 }
