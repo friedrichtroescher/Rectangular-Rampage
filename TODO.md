@@ -1,5 +1,3 @@
-- field boundaries
-- nice variables for bullet speed, walking speed etc
 - enemies
 - scoreboard
 - main menu?

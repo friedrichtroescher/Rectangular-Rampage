@@ -4,12 +4,16 @@
 
 #include "include/Player.h"
 #include "include/Input.h"
+#include "include/MovementBounds.h"
 #include <SFML/Graphics.hpp>
 
 
-Player::Player(sf::Vector2f size, sf::Vector2f position, sf::Color color, int health, int reloadTime) {
+Player::Player(sf::Vector2f size, sf::Vector2f position, MovementBounds movementBounds, float walkingSpeed,
+               sf::Color color, int health,
+               int reloadTime) : MovementBounds(movementBounds) {
     setSize(size);
     setPosition(position);
+    setWalkingSpeed(walkingSpeed);
     setFillColor(color);
     setHealth(health);
     setReloadTime(reloadTime);
@@ -71,7 +75,7 @@ void Player::tick() {
     //update player shooting timeout and animation
     if (getReloadTime() > 0) {
         setReloadTime(getReloadTime() - 1);
-        sf::Color reloadingColor = sf::Color(
+        auto reloadingColor = sf::Color(
                 sf::Color(255, 255 - (float(getReloadTime()) / float(getLastReloadLength())) * 255.f,
                           255 - (float(getReloadTime()) / float(getLastReloadLength())) * 255.f, 255));
         setFillColor(reloadingColor);
@@ -95,7 +99,7 @@ void Player::tick() {
     //update player position
     if (Input::getWASDDirection() != Direction::NONE) {
         setDirection(Input::getWASDDirection());
-        walk(Input::getWASDDirection(), 3);
+        walk(Input::getWASDDirection(), getWalkingSpeed());
     }
 
     //shooting
@@ -108,6 +112,15 @@ void Player::tick() {
 void Player::walk(Direction direction, float distance) {
     //set the direction field for later use, e.g. for shooting (or maybe a direction indicator?)
     this->setDirection(direction);
+
+    float boundDistance = this->boundDistance(direction);
+    if (boundDistance < distance) {
+        distance = boundDistance;
+    }
+
+    if (distance == 0) {
+        return;
+    }
 
     //move the player in the given direction
     switch (direction) {
@@ -154,6 +167,43 @@ void Player::setLastReloadLength(int lastReloadLength) {
 
 int Player::getLastReloadLength() {
     return lastReloadLength;
+}
+
+float Player::boundDistance(Direction direction) {
+    auto topLeftBound = getTopLeftBound();
+    auto bottomRightBound = getBottomRightBound();
+
+    auto playerTopLeft = getPosition();
+    auto playerTopRight = getPosition() + sf::RectangleShape::getPoint(1);
+    auto playerBottomRight = getPosition() + sf::RectangleShape::getPoint(2);
+    auto playerBottomLeft = getPosition() + sf::RectangleShape::getPoint(3);
+
+    switch (direction) {
+        case Direction::UP:
+            return playerTopLeft.y - topLeftBound.y;
+        case Direction::UP_RIGHT:
+            return std::min(playerTopRight.y - topLeftBound.y, bottomRightBound.x - playerTopRight.x);
+        case Direction::RIGHT:
+            return bottomRightBound.x - playerTopRight.x;
+        case Direction::DOWN_RIGHT:
+            return std::min(bottomRightBound.y - playerBottomRight.y, bottomRightBound.x - playerBottomRight.x);
+        case Direction::DOWN:
+            return bottomRightBound.y - playerBottomRight.y;
+        case Direction::DOWN_LEFT:
+            return std::min(bottomRightBound.y - playerBottomLeft.y, playerBottomLeft.x - topLeftBound.x);
+        case Direction::LEFT:
+            return playerTopLeft.x - topLeftBound.x;
+        case Direction::UP_LEFT:
+            return std::min(playerTopLeft.y - topLeftBound.y, playerTopLeft.x - topLeftBound.x);
+    }
+}
+
+float Player::getWalkingSpeed() {
+    return walkingSpeed;
+}
+
+float Player::setWalkingSpeed(float value) {
+    walkingSpeed = value;
 }
 
 

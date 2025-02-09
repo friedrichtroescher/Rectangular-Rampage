@@ -18,6 +18,10 @@ add_executable(main src/main.cpp
         src/Player.cpp
         src/include/Player.h
         src/include/Direction.h
+        src/Input.cpp
+        src/include/Input.h
+        src/MovementBounds.cpp
+        src/include/MovementBounds.h
 )
 target_compile_features(main PRIVATE cxx_std_17)
 target_link_libraries(main PRIVATE SFML::Graphics)

@@ -4,12 +4,11 @@
 
 int main() {
     //window initialization
-    auto window = sf::RenderWindow(sf::VideoMode({1920u, 1080u}), "CMake SFML Project");
+    auto window = sf::RenderWindow(sf::VideoMode({1280u, 720u}), "CMake SFML Project");
     window.setFramerateLimit(60);
 
 
-    Player player({10, 10}, {960, 540}, sf::Color::White, 100, 0);
-
+    Player player({10, 10}, {10, 10}, MovementBounds({0, 0}, {1280u, 720}), 3.f, sf::Color::White, 100, 0);
 
     while (window.isOpen()) {
         // Standard SFML event loop
