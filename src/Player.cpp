@@ -6,6 +6,7 @@
 #include "include/Input.h"
 #include "include/MovementBounds.h"
 #include <SFML/Graphics.hpp>
+#include <cmath>
 
 
 Player::Player(sf::Vector2f size, sf::Vector2f position, MovementBounds movementBounds, float walkingSpeed,
@@ -104,15 +105,16 @@ void Player::tick() {
 
     //shooting
     if (Input::isShooting()) {
-        shoot({4, 4}, 60, sf::Color::Red, 2 * 3, 30);
+        shoot({4, 4}, 60, sf::Color::Red, 2 * 3, 6);
     }
 
 }
 
 void Player::walk(Direction direction, float distance) {
     //set the direction field for later use, e.g. for shooting (or maybe a direction indicator?)
-    this->setDirection(direction);
+    setDirection(direction);
 
+    //use setter here!
     float boundDistance = this->boundDistance(direction);
     if (boundDistance < distance) {
         distance = boundDistance;
@@ -122,31 +124,33 @@ void Player::walk(Direction direction, float distance) {
         return;
     }
 
+    float sqrt2 = sqrt(2);
+
     //move the player in the given direction
     switch (direction) {
         case Direction::UP:
             move({0, -distance});
             break;
         case Direction::UP_RIGHT:
-            move({distance, -distance});
+            move({distance / sqrt2, -distance / sqrt2});
             break;
         case Direction::RIGHT:
             move({distance, 0});
             break;
         case Direction::DOWN_RIGHT:
-            move({distance, distance});
+            move({distance / sqrt2, distance / sqrt2});
             break;
         case Direction::DOWN:
             move({0, distance});
             break;
         case Direction::DOWN_LEFT:
-            move({-distance, distance});
+            move({-distance / sqrt2, distance / sqrt2});
             break;
         case Direction::LEFT:
             move({-distance, 0});
             break;
         case Direction::UP_LEFT:
-            move({-distance, -distance});
+            move({-distance / sqrt2, -distance / sqrt2});
             break;
     }
 }
