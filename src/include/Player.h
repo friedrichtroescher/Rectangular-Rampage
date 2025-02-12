@@ -50,14 +50,19 @@ public:
 
     float setWalkingSpeed(float value);
 
+    int getLevel();
+
+    void setLevel(int value);
+
 protected:
     void setLastReloadLength(int lastReloadLength);
 
     int getLastReloadLength();
 
 private:
-    int health{};
-    int reloadTime{};
+    int health;
+    int level;
+    int reloadTime;
     Direction direction;
     std::vector<Projectile> projectiles;
     int lastReloadLength;

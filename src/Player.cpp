@@ -210,4 +210,12 @@ float Player::setWalkingSpeed(float value) {
     walkingSpeed = value;
 }
 
+int Player::getLevel() {
+    return level;
+}
+
+void Player::setLevel(int value) {
+    this->level = value;
+}
+
 
