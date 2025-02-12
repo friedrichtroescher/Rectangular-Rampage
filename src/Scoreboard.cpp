@@ -7,6 +7,11 @@
 Scoreboard::Scoreboard(int health, int level) {
     setHealth(health);
     setLevel(level);
+    setSize({1280, 72});
+    setOutlineColor(sf::Color(100, 100, 100, 255));
+    setFillColor(sf::Color::Black);
+    setOutlineThickness(-5);
+
 }
 
 void Scoreboard::setHealth(int value) {
