@@ -12,10 +12,6 @@ int main() {
     Player player({10, 10}, {10, 10}, MovementBounds({0, 0}, {1280, 648}), 3.f, sf::Color::White, 100, 0);
     Scoreboard scoreboard(100, 10);
     scoreboard.setPosition({0, 648});
-    scoreboard.setSize({1280, 72});
-    scoreboard.setOutlineColor(sf::Color(169, 169, 169, 255));
-    scoreboard.setFillColor(sf::Color::Black);
-    scoreboard.setOutlineThickness(-5);
 
 
     while (window.isOpen()) {

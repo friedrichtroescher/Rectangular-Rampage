@@ -12,6 +12,7 @@ FetchContent_Declare(SFML
         SYSTEM)
 FetchContent_MakeAvailable(SFML)
 
+
 add_executable(main src/main.cpp
         src/Projectile.cpp
         src/include/Projectile.h
@@ -22,6 +23,8 @@ add_executable(main src/main.cpp
         src/include/Input.h
         src/MovementBounds.cpp
         src/include/MovementBounds.h
+        src/Scoreboard.cpp
+        src/include/Scoreboard.h
 )
 target_compile_features(main PRIVATE cxx_std_17)
-target_link_libraries(main PRIVATE SFML::Graphics)
+target_link_libraries(main PRIVATE SFML::Graphics SFML::Audio)
