@@ -33,9 +33,9 @@ int main() {
         player.draw(window);
 
         //scoreboard handling
-        scoreboard.setHealth(player.getHealth());
-        scoreboard.setLevel(player.getLevel());
+        scoreboard.update(player);
         scoreboard.draw(window);
+        
         window.display();
     }
 }

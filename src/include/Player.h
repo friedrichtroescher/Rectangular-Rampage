@@ -54,6 +54,7 @@ public:
 
     void setLevel(int value);
 
+
 protected:
     void setLastReloadLength(int lastReloadLength);
 

@@ -6,6 +6,7 @@
 #define CMAKESFMLPROJECT_SCOREBOARD_H
 
 #include <SFML/Graphics.hpp>
+#include "Player.h"
 
 class Scoreboard : public sf::RectangleShape {
 public:
@@ -20,6 +21,8 @@ public:
     int getHealth();
 
     int getLevel();
+
+    void update(Player &player);
 
 protected:
 private:

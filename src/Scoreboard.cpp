@@ -3,6 +3,7 @@
 //
 
 #include "include/Scoreboard.h"
+#include "include/Player.h"
 
 Scoreboard::Scoreboard(int health, int level) {
     setHealth(health);
@@ -40,7 +41,7 @@ void Scoreboard::draw(sf::RenderWindow &window) {
     // a scoreboard that displays the health as a rectangle and the level as a "Level: int level" text
     sf::RectangleShape healthBar({float(getHealth()), 10});
     healthBar.setPosition(
-            {getPosition().x + getSize().x / 10.f, getPosition().y + getSize().y / 2.f - healthBar.getSize().y});
+            {getPosition().x + getSize().x / 10.f, getPosition().y + getSize().y / 2.f - healthBar.getSize().y / 2.f});
     healthBar.setFillColor(sf::Color::Red);
     window.draw(*this);
     window.draw(healthBar);
@@ -53,4 +54,9 @@ void Scoreboard::draw(sf::RenderWindow &window) {
 //    window.draw(levelText);
 //
 
+}
+
+void Scoreboard::update(Player &player) {
+    setHealth(player.getHealth());
+    setLevel(player.getLevel());
 }
