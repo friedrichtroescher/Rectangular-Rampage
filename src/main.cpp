@@ -35,7 +35,7 @@ int main() {
         //scoreboard handling
         scoreboard.update(player);
         scoreboard.draw(window);
-        
+
         window.display();
     }
 }

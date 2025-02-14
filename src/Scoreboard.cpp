@@ -13,6 +13,9 @@ Scoreboard::Scoreboard(int health, int level) {
     setFillColor(sf::Color::Black);
     setOutlineThickness(-5);
 
+    if (!pressStart2PRegular.openFromFile("fonts/PressStart2P-Regular.ttf")) {
+        // TODO Error handling
+    }
 }
 
 void Scoreboard::setHealth(int value) {
@@ -38,21 +41,36 @@ int Scoreboard::getLevel() {
 }
 
 void Scoreboard::draw(sf::RenderWindow &window) {
-    // a scoreboard that displays the health as a rectangle and the level as a "Level: int level" text
-    sf::RectangleShape healthBar({float(getHealth()), 10});
-    healthBar.setPosition(
-            {getPosition().x + getSize().x / 10.f, getPosition().y + getSize().y / 2.f - healthBar.getSize().y / 2.f});
-    healthBar.setFillColor(sf::Color::Red);
+    //outline
     window.draw(*this);
+
+    //health bar text
+    sf::Text healthText(pressStart2PRegular, "Health: ");
+    healthText.setCharacterSize(20);
+    healthText.setFillColor(sf::Color::Red);
+    healthText.setPosition({getPosition().x + getSize().x / 30.f,
+                            getPosition().y + getSize().y / 2.f - healthText.getCharacterSize() / 2.f});
+
+    //health bar indicator
+    sf::RectangleShape healthBar({float(getHealth()) * 8, 20});
+    healthBar.setPosition(
+            {getPosition().x + healthText.getLocalBounds().size.x + healthText.getLocalBounds().size.x / 5,
+             getPosition().y + getSize().y / 2.f - healthBar.getSize().y / 2.f});
+    healthBar.setFillColor(sf::Color::Red);
+
+    //Level indicator
+    sf::Text levelText(pressStart2PRegular, "Level: " + std::to_string(getLevel()));
+    levelText.setCharacterSize(20);
+    levelText.setFillColor(sf::Color::White);
+    levelText.setPosition({getPosition().x + getSize().x - levelText.getLocalBounds().size.x - getSize().x / 30.f,
+                           getPosition().y + getSize().y / 2.f - levelText.getCharacterSize() / 2.f});
+
+
+    //draw the above initialized scoreboard elements
+    window.draw(healthText);
     window.draw(healthBar);
+    window.draw(levelText);
 
-
-//    sf::Font font;
-//    font.loadFromFile("arial.ttf");
-//    sf::Text levelText("Level: " + std::to_string(level), font);
-//    levelText.setPosition(10, 30);
-//    window.draw(levelText);
-//
 
 }
 

@@ -28,6 +28,7 @@ protected:
 private:
     int health{};
     int level{};
+    sf::Font pressStart2PRegular;
 };
 
 
