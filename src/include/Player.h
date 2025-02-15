@@ -10,64 +10,34 @@
 #include "Direction.h"
 #include "Projectile.h"
 #include "MovementBounds.h"
+#include "Combatant.h"
 
-class Player : public sf::RectangleShape, public MovementBounds {
+class Player : public Combatant {
 public:
     //Constructor
-    Player(sf::Vector2f size, sf::Vector2f position, MovementBounds movementBounds, float walkingSpeed, sf::Color color,
-           int health,
-           int reloadTime);
+    Player(sf::Vector2f size,
+           sf::Vector2f position,
+           MovementBounds movementBounds,
+           float walkingSpeed,
+           sf::Color color,
+           float health,
+           int level, std::vector<Projectile> projectiles);
+
 
     //Getters
-    int getHealth();
-
-    int getReloadTime();
-
-    Direction getDirection();
-
-    std::vector<Projectile> getProjectiles();
+    int getLevel() const;
 
     //Setters
-    void setHealth(int health);
-
-    void setReloadTime(int reloadTime);
-
-    void setDirection(Direction direction);
-
-    void setProjectiles(std::vector<Projectile> projectiles);
-
-    void shoot(sf::Vector2f projectileSize, int timeout, sf::Color color, float speed, int reloadTime);
+    void setLevel(int value);
 
     void tick();
 
-    void draw(sf::RenderWindow &window);
-
-    void walk(Direction direction, float distance);
-
-    float boundDistance(Direction direction);
-
-    float getWalkingSpeed();
-
-    float setWalkingSpeed(float value);
-
-    int getLevel();
-
-    void setLevel(int value);
-
 
 protected:
-    void setLastReloadLength(int lastReloadLength);
 
-    int getLastReloadLength();
 
 private:
-    int health;
-    int level;
-    int reloadTime;
-    Direction direction;
-    std::vector<Projectile> projectiles;
-    int lastReloadLength;
-    float walkingSpeed;
+    int level{};
 };
 
 

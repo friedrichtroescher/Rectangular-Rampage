@@ -1,16 +1,21 @@
 #include <SFML/Graphics.hpp>
 #include <algorithm>
 #include "include/Player.h"
+#include "include/Combatant.h"
 #include "include/Scoreboard.h"
+#include "include/Projectile.h"
 
 int main() {
     //window initialization
-    auto window = sf::RenderWindow(sf::VideoMode({1280u, 720u}), "CMake SFML Project");
+    auto window = sf::RenderWindow(sf::VideoMode({1280u, 720u}), "Rectangular Rampage");
     window.setFramerateLimit(60);
 
+    std::vector<Projectile> projectiles;
 
-    Player player({10, 10}, {10, 10}, MovementBounds({0, 0}, {1280, 648}), 3.f, sf::Color::White, 100, 0);
-    Scoreboard scoreboard(100, 10);
+    Player player({10, 10}, {10, 10}, MovementBounds({0, 0}, {1280, 648}), 3.f, sf::Color::White, 100, 1,
+                  projectiles);
+
+    Scoreboard scoreboard(0, 0);
     scoreboard.setPosition({0, 648});
 
 
@@ -26,15 +31,31 @@ int main() {
         window.clear(sf::Color::Black);
 
 
-        // Draw here
+        // update projectiles
+        for (auto &projectile: projectiles) {
+            auto new_end = std::remove_if(projectiles.begin(), projectiles.end(), [](Projectile projectile) {
+                if (projectile.getTimeout() <= 0) {
+                    return true;
+                }
+                return false;
+            });
+            projectiles.erase(new_end, projectiles.end());
 
-        //Movement, Shooting etc update for player
+
+            projectile.setTimeout(projectile.getTimeout() - 1);
+
+            projectile.move(projectile.getVelocity());
+        }
+
+        //Movement, shooting update for player
         player.tick();
         player.draw(window);
 
         //scoreboard handling
         scoreboard.update(player);
         scoreboard.draw(window);
+
+        //Monster Handling
 
         window.display();
     }
