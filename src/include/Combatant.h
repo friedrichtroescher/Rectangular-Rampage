@@ -53,7 +53,7 @@ protected:
     Direction direction;
     int lastReloadLength;
     float walkingSpeed;
-    std::vector<Projectile> projectiles;
+    std::vector<Projectile> &projectiles;
 private:
 };
 

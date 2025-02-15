@@ -8,7 +8,7 @@
 
 Combatant::Combatant(sf::Vector2f size, sf::Vector2f position, MovementBounds movementBounds, float walkingSpeed,
                      sf::Color color, float health, std::vector<Projectile> &projectiles)
-        : MovementBounds(movementBounds) {
+        : MovementBounds(movementBounds), projectiles(projectiles) {
 
     setSize(size);
     setPosition(position);

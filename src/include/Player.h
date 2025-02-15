@@ -21,7 +21,7 @@ public:
            float walkingSpeed,
            sf::Color color,
            float health,
-           int level, std::vector<Projectile> projectiles);
+           int level, std::vector<Projectile> &projectiles);
 
 
     //Getters

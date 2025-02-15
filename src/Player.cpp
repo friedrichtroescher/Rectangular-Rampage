@@ -9,7 +9,7 @@
 #include <cmath>
 
 Player::Player(sf::Vector2f size, sf::Vector2f position, MovementBounds movementBounds, float walkingSpeed,
-               sf::Color color, float health, int level, std::vector<Projectile> projectiles)
+               sf::Color color, float health, int level, std::vector<Projectile> &projectiles)
         : Combatant(size, position, movementBounds,
                     walkingSpeed, color, health,
                     projectiles) {
@@ -35,7 +35,7 @@ void Player::tick() {
 
     //shooting
     if (Input::isShooting()) {
-        shoot({4, 4}, 60, sf::Color::Red, 2 * 3, 6);
+        shoot({4, 4}, 60, sf::Color::Red, 2 * 3, 100);
     }
 
 }

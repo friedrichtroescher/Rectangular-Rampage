@@ -45,6 +45,7 @@ int main() {
             projectile.setTimeout(projectile.getTimeout() - 1);
 
             projectile.move(projectile.getVelocity());
+            window.draw(projectile);
         }
 
         //Movement, shooting update for player
@@ -56,6 +57,11 @@ int main() {
         scoreboard.draw(window);
 
         //Monster Handling
+
+        //debug point when presing i
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::I)) {
+
+        }
 
         window.display();
     }
