@@ -9,20 +9,21 @@
 #include <cmath>
 
 Player::Player(sf::Vector2f size, sf::Vector2f position, MovementBounds movementBounds, float walkingSpeed,
-               sf::Color color, float health, int level, std::vector<Projectile> &projectiles)
+               sf::Color color, float health, float damage, int totalReloadTime, int level,
+               std::vector<Projectile> &projectiles)
         : Combatant(size, position, movementBounds,
-                    walkingSpeed, color, health,
+                    walkingSpeed, color, health, damage, totalReloadTime,
                     projectiles) {
     setLevel(level);
 }
 
 void Player::tick() {
     //update player shooting timeout and animation
-    if (getReloadTime() > 0) {
-        setReloadTime(getReloadTime() - 1);
+    if (remainingReloadTime > 0) {
+        remainingReloadTime--;
         auto reloadingColor = sf::Color(
-                sf::Color(255, 255 - (float(getReloadTime()) / float(getLastReloadLength())) * 255.f,
-                          255 - (float(getReloadTime()) / float(getLastReloadLength())) * 255.f, 255));
+                sf::Color(255, 255 - (float(remainingReloadTime) / float(totalReloadTime)) * 255.f,
+                          255 - (float(remainingReloadTime) / float(totalReloadTime)) * 255.f, 255));
         setFillColor(reloadingColor);
     } else {
         setFillColor(sf::Color::White);
@@ -35,7 +36,7 @@ void Player::tick() {
 
     //shooting
     if (Input::isShooting()) {
-        shoot({4, 4}, 60, sf::Color::Red, 2 * 3, 100);
+        shoot({4, 4}, 60, sf::Color::Red, 2 * 3);
     }
 
 }

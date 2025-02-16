@@ -4,6 +4,11 @@
 #include "include/Combatant.h"
 #include "include/Scoreboard.h"
 #include "include/Projectile.h"
+#include "include/Monster.h"
+
+void initializeLevel(Player player) {
+
+}
 
 int main() {
     //window initialization
@@ -12,7 +17,9 @@ int main() {
 
     std::vector<Projectile> projectiles;
 
-    Player player({10, 10}, {10, 10}, MovementBounds({0, 0}, {1280, 648}), 3.f, sf::Color::White, 100, 1,
+    Player player({10, 10}, {10, 10}, MovementBounds({0, 0},
+                                                     {1280, 648}),
+                  3.f, sf::Color::White, 100, 1, 120, 1,
                   projectiles);
 
     Scoreboard scoreboard(0, 0);

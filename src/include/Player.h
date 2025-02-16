@@ -20,7 +20,7 @@ public:
            MovementBounds movementBounds,
            float walkingSpeed,
            sf::Color color,
-           float health,
+           float health, float damage, int totalReloadTime,
            int level, std::vector<Projectile> &projectiles);
 
 
