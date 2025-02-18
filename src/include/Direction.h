@@ -21,9 +21,9 @@ enum class Direction {
 
 class DirectionUtils {
 public:
-    Direction getDirectionFromVector(sf::Vector2f vector);
+    static Direction getDirectionFromVector(sf::Vector2f vector);
 
-    float getDistanceFromVector(sf::Vector2f vector);
+    static float getDistanceFromVector(sf::Vector2f vector);
 };
 
 

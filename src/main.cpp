@@ -22,6 +22,15 @@ int main() {
                   3.f, sf::Color::White, 100, 1, 120, 1,
                   projectiles);
 
+    std::vector<Monster> monsters;
+    for (int i = 0; i < 10; i++) {
+        monsters.push_back(Monster({10, 10}, {static_cast<float>(rand() % 1280), static_cast<float>(rand() % 648)},
+                                   MovementBounds({0, 0},
+                                                  {1280, 648}),
+                                   (0.5 + (rand() % 100) / 400.f), sf::Color::Green, 100, 1, 10, projectiles, player));
+    }
+
+
     Scoreboard scoreboard(0, 0);
     scoreboard.setPosition({0, 648});
 
@@ -63,9 +72,14 @@ int main() {
         scoreboard.update(player);
         scoreboard.draw(window);
 
-        //Monster Handling
+        //Handle monster vector
+        for (auto &monster: monsters) {
+            monster.tick();
+            monster.draw(window);
+        }
 
-        //debug point when presing i
+
+        //debug point when pressing i
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::I)) {
 
         }

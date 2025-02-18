@@ -3,6 +3,7 @@
 //
 
 #include "include/Monster.h"
+#include "include/Direction.h"
 
 Monster::Monster(sf::Vector2f size,
                  sf::Vector2f position,
@@ -28,15 +29,16 @@ void Monster::tick() {
                 255);
         setFillColor(reloadingColor);
     } else {
-        setFillColor(sf::Color::White);
+        setFillColor(sf::Color::Green);
     }
 
-    //move Monster towards targetedPlayer position
+    sf::Vector2f playerDirection = calculatePlayerDirection();
 
-
-
-
-
+    //move the Monster towards the player if it is further than 5x player size away
+    //Assumes square player
+    if (DirectionUtils::getDistanceFromVector(playerDirection) > 5 * targetedPlayer.getSize().x) {
+        walk(DirectionUtils::getDirectionFromVector(playerDirection), getWalkingSpeed());
+    }
 }
 
 
