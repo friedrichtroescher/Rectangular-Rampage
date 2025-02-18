@@ -18,7 +18,7 @@ Player::Player(sf::Vector2f size, sf::Vector2f position, MovementBounds movement
 }
 
 void Player::tick() {
-    //update player shooting timeout and animation
+    //update targetedPlayer shooting timeout and animation
     if (remainingReloadTime > 0) {
         remainingReloadTime--;
         auto reloadingColor = sf::Color(
@@ -29,7 +29,7 @@ void Player::tick() {
         setFillColor(sf::Color::White);
     }
 
-    //update player position
+    //update targetedPlayer position
     if (Input::getWASDDirection() != Direction::NONE) {
         walk(Input::getWASDDirection(), getWalkingSpeed());
     }

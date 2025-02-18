@@ -15,23 +15,25 @@ class Combatant : public sf::RectangleShape, public MovementBounds {
 public:
     float getHealth();
 
-    int getReloadTime();
-
     Direction getDirection();
 
     float getWalkingSpeed();
 
-    int getLastReloadLength();
+    int getRemainingReloadTime();
 
-    void setLastReloadLength(int value);
+    int getTotalReloadTime();
+
+    float getDamage();
+
+    void setTotalReloadTime(int value);
 
     void setHealth(float value);
-
-    void setReloadTime(int value);
 
     void setDirection(Direction value);
 
     float setWalkingSpeed(float value);
+
+    void setDamage(float value);
 
     virtual void tick() = 0;
 
@@ -41,18 +43,21 @@ public:
 
     float boundDistance(Direction direction);
 
-    void shoot(sf::Vector2f projectileSize, int timeout, sf::Color color, float speed, int reloadTime);
+    void shoot(sf::Vector2f projectileSize, int timeout, sf::Color color, float speed);
 
 protected:
     Combatant(sf::Vector2f size, sf::Vector2f position, MovementBounds movementBounds, float walkingSpeed,
               sf::Color color,
-              float health, std::vector<Projectile> &projectiles);
+              float health, float damage, int totalReloadTime, std::vector<Projectile> &projectiles);
 
-    float health;
-    int reloadTime;
+    void setRemainingReloadTime(int value);
+
+    float health{};
+    float damage{};
+    int remainingReloadTime{};
+    int totalReloadTime{};
     Direction direction;
-    int lastReloadLength;
-    float walkingSpeed;
+    float walkingSpeed{};
     std::vector<Projectile> &projectiles;
 private:
 };

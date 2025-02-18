@@ -9,10 +9,11 @@ Monster::Monster(sf::Vector2f size,
                  MovementBounds movementBounds,
                  float walkingSpeed,
                  sf::Color color,
-                 float health, float damage, int totalReloadTime, std::vector<Projectile> &projectiles, Player &player)
+                 float health, float damage, int totalReloadTime, std::vector<Projectile> &projectiles, Player
+                 &targetedPlayer)
         :
         Combatant(size, position, movementBounds, walkingSpeed, color, health, damage, totalReloadTime,
-                  projectiles), player(player) {
+                  projectiles), targetedPlayer(targetedPlayer) {
 
 };
 
@@ -30,7 +31,7 @@ void Monster::tick() {
         setFillColor(sf::Color::White);
     }
 
-    //move Monster towards player position
+    //move Monster towards targetedPlayer position
 
 
 
@@ -41,6 +42,6 @@ void Monster::tick() {
 
 sf::Vector2f Monster::calculatePlayerDirection() {
     return {
-            player.getPosition() - getPosition()
+            targetedPlayer.getPosition() - getPosition()
     };
 }

@@ -15,14 +15,14 @@ public:
             MovementBounds movementBounds,
             float walkingSpeed,
             sf::Color color,
-            float health, float damage, int totalReloadTime, std::vector<Projectile> &projectiles, Player &player);
+            float health, float damage, int totalReloadTime, std::vector<Projectile> &projectiles, Player &targetedPlayer);
 
     void tick();
 
 
 protected:
 private:
-    Player &player;
+    Player &targetedPlayer;
 
     sf::Vector2f calculatePlayerDirection();
 };

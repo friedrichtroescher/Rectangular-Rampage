@@ -7,7 +7,8 @@
 // Created by Friedrich Tröscher on 15.02.25.
 
 Combatant::Combatant(sf::Vector2f size, sf::Vector2f position, MovementBounds movementBounds, float walkingSpeed,
-                     sf::Color color, float health, std::vector<Projectile> &projectiles)
+                     sf::Color color, float health, float damage, int totalReloadTime,
+                     std::vector<Projectile> &projectiles)
         : MovementBounds(movementBounds), projectiles(projectiles) {
 
     setSize(size);
@@ -15,15 +16,13 @@ Combatant::Combatant(sf::Vector2f size, sf::Vector2f position, MovementBounds mo
     setFillColor(color);
     setHealth(health);
     setWalkingSpeed(walkingSpeed);
-    this->projectiles = projectiles;
+    setDirection(Direction::NONE);
+    setDamage(damage);
+    setTotalReloadTime(totalReloadTime);
 }
 
 float Combatant::getHealth() {
     return health;
-}
-
-int Combatant::getReloadTime() {
-    return reloadTime;
 }
 
 Direction Combatant::getDirection() {
@@ -31,18 +30,16 @@ Direction Combatant::getDirection() {
 }
 
 void Combatant::setHealth(float value) {
-    this->health = value;
+    health = value;
 }
 
-void Combatant::setReloadTime(int value) {
-    this->reloadTime = value;
-}
 
-void Combatant::shoot(sf::Vector2f projectileSize, int timeout, sf::Color color, float speed, int reloadTime) {
+void Combatant::shoot(sf::Vector2f projectileSize, int timeout, sf::Color color, float speed) {
     //don't shoot if Combatant is reloading
-    if (getReloadTime() > 0) {
+    if (getRemainingReloadTime() > 0) {
         return;
     }
+
     Projectile projectile = (Projectile(projectileSize, {getPosition().x + (getSize().x -
                                                                             projectileSize.x) /
                                                                            2.f,
@@ -52,14 +49,14 @@ void Combatant::shoot(sf::Vector2f projectileSize, int timeout, sf::Color color,
                                         color,
                                         Projectile::generateVelocity(getDirection(), speed), timeout));
 
-    this->projectiles.push_back(projectile);
+    projectiles.push_back(projectile);
 
-    setLastReloadLength(reloadTime);
-    setReloadTime(reloadTime);
+    //start the reload timer
+    setRemainingReloadTime(getTotalReloadTime());
 }
 
 void Combatant::setDirection(Direction value) {
-    this->direction = value;
+    direction = value;
 }
 
 void Combatant::walk(Direction direction, float distance) {
@@ -75,9 +72,9 @@ void Combatant::walk(Direction direction, float distance) {
         return;
     }
 
-    float sqrt2 = sqrt(2);
+    auto sqrt2 = float(sqrt(2)); //float precision is enough for moving these rectangles :D
 
-    //move the player in the given direction
+    //move the targetedPlayer in the given direction
     switch (direction) {
         case Direction::UP:
             move({0, -distance});
@@ -109,16 +106,8 @@ void Combatant::walk(Direction direction, float distance) {
 }
 
 void Combatant::draw(sf::RenderWindow &window) {
-    //draw the player
+    //draw the targetedPlayer
     window.draw(*this);
-}
-
-void Combatant::setLastReloadLength(int value) {
-    this->lastReloadLength = value;
-}
-
-int Combatant::getLastReloadLength() {
-    return lastReloadLength;
 }
 
 float Combatant::boundDistance(Direction direction) {
@@ -158,4 +147,40 @@ float Combatant::getWalkingSpeed() {
 
 float Combatant::setWalkingSpeed(float value) {
     walkingSpeed = value;
+}
+
+float Combatant::getDamage() {
+    return damage;
+}
+
+void Combatant::setDamage(float value) {
+    if (value < 0) {
+        damage = 0;
+    } else {
+        damage = value;
+    }
+}
+
+int Combatant::getTotalReloadTime() {
+    return totalReloadTime;
+}
+
+int Combatant::getRemainingReloadTime() {
+    return remainingReloadTime;
+}
+
+void Combatant::setTotalReloadTime(int value) {
+    if (value <= 0) {
+        totalReloadTime = 0;
+    } else {
+        totalReloadTime = value;
+    }
+}
+
+void Combatant::setRemainingReloadTime(int value) {
+    if (value <= 0) {
+        remainingReloadTime = 0;
+    } else {
+        remainingReloadTime = value;
+    }
 }

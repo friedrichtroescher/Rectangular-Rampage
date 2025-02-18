@@ -55,7 +55,7 @@ int main() {
             window.draw(projectile);
         }
 
-        //Movement, shooting update for player
+        //Movement, shooting update for targetedPlayer
         player.tick();
         player.draw(window);
 

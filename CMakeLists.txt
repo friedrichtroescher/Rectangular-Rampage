@@ -18,6 +18,7 @@ add_executable(main src/main.cpp
         src/include/Projectile.h
         src/Player.cpp
         src/include/Player.h
+        src/Direction.cpp
         src/include/Direction.h
         src/Input.cpp
         src/include/Input.h
@@ -25,6 +26,18 @@ add_executable(main src/main.cpp
         src/include/MovementBounds.h
         src/Scoreboard.cpp
         src/include/Scoreboard.h
+        src/Combatant.cpp
+        src/Combatant.cpp
+        src/include/Combatant.h
+        src/Direction.cpp
+        src/include/Direction.h
 )
+
+set(FONT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src/resources/fonts")
+
+file(COPY ${FONT_DIR}/Press_Start_2P/PressStart2P-Regular.ttf
+        DESTINATION ${CMAKE_BINARY_DIR}/bin/fonts)
+
+
 target_compile_features(main PRIVATE cxx_std_17)
 target_link_libraries(main PRIVATE SFML::Graphics SFML::Audio)
