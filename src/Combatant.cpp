@@ -47,7 +47,7 @@ void Combatant::shoot(sf::Vector2f projectileSize, int timeout, sf::Color color,
                                                                             projectileSize.y) /
                                                                            2.f},
                                         color,
-                                        Projectile::generateVelocity(getDirection(), speed), timeout));
+                                        Projectile::generateFixedDirectionVelocity(getDirection(), speed), timeout));
 
     projectiles.push_back(projectile);
 
@@ -183,4 +183,26 @@ void Combatant::setRemainingReloadTime(int value) {
     } else {
         remainingReloadTime = value;
     }
+}
+
+void Combatant::shootPrecisely(sf::Vector2f projectileSize, int timeout, sf::Color color, float speed,
+                               sf::Vector2f projectileMovement) {
+    //don't shoot if Combatant is reloading
+    if (getRemainingReloadTime() > 0) {
+        return;
+    }
+
+    Projectile projectile = (Projectile(projectileSize, {getPosition().x + (getSize().x -
+                                                                            projectileSize.x) /
+                                                                           2.f,
+                                                         getPosition().y + (getSize().y -
+                                                                            projectileSize.y) /
+                                                                           2.f},
+                                        color,
+                                        projectileMovement, timeout));
+
+    projectiles.push_back(projectile);
+
+    //start the reload timer
+    setRemainingReloadTime(getTotalReloadTime());
 }

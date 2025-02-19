@@ -1,14 +1,12 @@
 #include <SFML/Graphics.hpp>
 #include <algorithm>
+#include <random>
 #include "include/Player.h"
 #include "include/Combatant.h"
 #include "include/Scoreboard.h"
 #include "include/Projectile.h"
 #include "include/Monster.h"
 
-void initializeLevel(Player player) {
-
-}
 
 int main() {
     //window initialization
@@ -24,10 +22,12 @@ int main() {
 
     std::vector<Monster> monsters;
     for (int i = 0; i < 10; i++) {
-        monsters.push_back(Monster({10, 10}, {static_cast<float>(rand() % 1280), static_cast<float>(rand() % 648)},
+        monsters.push_back(Monster({10, 10}, {float((rand() % 1280)), float((rand() % 648))},
                                    MovementBounds({0, 0},
                                                   {1280, 648}),
-                                   (0.5 + (rand() % 100) / 400.f), sf::Color::Green, 100, 1, 10, projectiles, player));
+                                   (0.5 + (rand() % 100) / 400.f), sf::Color::Green, 100, 1, 120, projectiles, player));
+        //to make monsters not shoot all at the same time, they are initialized with a randomized initial reload time
+        monsters[i].setRemainingReloadTime(rand() % monsters[i].getTotalReloadTime());
     }
 
 

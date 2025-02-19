@@ -24,6 +24,8 @@ public:
     static Direction getDirectionFromVector(sf::Vector2f vector);
 
     static float getDistanceFromVector(sf::Vector2f vector);
+
+    static sf::Vector2f getNormalizedVector(sf::Vector2f vector);
 };
 
 

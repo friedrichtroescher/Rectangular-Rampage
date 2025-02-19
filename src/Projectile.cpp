@@ -30,7 +30,7 @@ void Projectile::setTimeout(int timeout) {
     this->timeout = timeout;
 }
 
-sf::Vector2f Projectile::generateVelocity(Direction direction, float speed) {
+sf::Vector2f Projectile::generateFixedDirectionVelocity(Direction direction, float speed) {
     auto sqrt2 = float(sqrt(2));
     switch (direction) {
         case Direction::UP:

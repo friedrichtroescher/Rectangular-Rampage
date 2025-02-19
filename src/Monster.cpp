@@ -22,14 +22,21 @@ void Monster::tick() {
     //update Monster shooting timeout and animation
     if (remainingReloadTime > 0) {
         remainingReloadTime--;
+
+        //Color changes from a dark green to a bright green as the reload completes
         auto reloadingColor = sf::Color(
                 0,
-                255 - (float(remainingReloadTime) / float(totalReloadTime)) * 128.f,
+                255.f - (float(remainingReloadTime) / float(totalReloadTime)) * 200.f,
                 0,
                 255);
         setFillColor(reloadingColor);
     } else {
-        setFillColor(sf::Color::Green);
+        float projectileSpeed = 3;
+        sf::Vector2f projectileVector = DirectionUtils::getNormalizedVector(calculatePlayerDirection()) *
+                                        projectileSpeed;
+
+        shootPrecisely({5, 5}, 120, sf::Color::Green, 5,
+                       projectileVector);
     }
 
     sf::Vector2f playerDirection = calculatePlayerDirection();

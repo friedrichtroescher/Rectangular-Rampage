@@ -45,12 +45,16 @@ public:
 
     void shoot(sf::Vector2f projectileSize, int timeout, sf::Color color, float speed);
 
+    void shootPrecisely(sf::Vector2f projectileSize, int timeout, sf::Color color, float speed, sf::Vector2f
+    projectileMovement);
+
+    void setRemainingReloadTime(int value);
+
 protected:
     Combatant(sf::Vector2f size, sf::Vector2f position, MovementBounds movementBounds, float walkingSpeed,
               sf::Color color,
               float health, float damage, int totalReloadTime, std::vector<Projectile> &projectiles);
 
-    void setRemainingReloadTime(int value);
 
     float health{};
     float damage{};

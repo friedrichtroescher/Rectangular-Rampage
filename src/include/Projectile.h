@@ -18,7 +18,7 @@ public:
 
     int getTimeout();
 
-    static sf::Vector2f generateVelocity(Direction direction, float speed);
+    static sf::Vector2f generateFixedDirectionVelocity(Direction direction, float speed);
 
     //Setters
     void setVelocity(sf::Vector2f velocity);

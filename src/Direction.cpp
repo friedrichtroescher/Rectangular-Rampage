@@ -33,3 +33,10 @@ Direction DirectionUtils::getDirectionFromVector(sf::Vector2f vector) {
 float DirectionUtils::getDistanceFromVector(sf::Vector2f vector) {
     return sqrt(vector.x * vector.x + vector.y * vector.y);
 }
+
+sf::Vector2f DirectionUtils::getNormalizedVector(sf::Vector2f vector) {
+    float magnitude = getDistanceFromVector(vector);
+
+    //return normalized vector
+    return {vector.x / magnitude, vector.y / magnitude};
+}
