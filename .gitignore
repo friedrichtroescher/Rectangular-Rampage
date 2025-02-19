@@ -4,5 +4,7 @@ out
 .idea
 .vs
 .vscode
-/cmake-build-debug/
-/cmake-build-release/
+cmake-build-debug
+cmake-build-release
+cmake-build-debug-event-trace
+cmake-sfml-project
