@@ -15,9 +15,10 @@ public:
             MovementBounds movementBounds,
             float walkingSpeed,
             sf::Color color,
-            float health, float damage, int totalReloadTime, std::vector<Projectile> &projectiles, Player &targetedPlayer);
+            float health, float damage, int totalReloadTime, std::vector<Projectile> &projectiles,
+            Player &targetedPlayer);
 
-    void tick();
+    void tick() override;
 
 
 protected:

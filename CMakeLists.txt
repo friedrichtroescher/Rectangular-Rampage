@@ -27,10 +27,13 @@ add_executable(main src/main.cpp
         src/Scoreboard.cpp
         src/include/Scoreboard.h
         src/Combatant.cpp
-        src/Combatant.cpp
         src/include/Combatant.h
         src/Direction.cpp
         src/include/Direction.h
+        src/GameLoop.cpp
+        src/include/GameLoop.h
+        src/Monster.cpp
+        src/include/Monster.h
 )
 
 set(FONT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src/resources/fonts")
