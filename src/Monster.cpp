@@ -18,6 +18,12 @@ Monster::Monster(sf::Vector2f size,
 };
 
 void Monster::tick() {
+    if (game == nullptr) {
+        return;
+    }
+
+
+
     //update Monster shooting timeout and animation
     if (remainingReloadTime > 0) {
         remainingReloadTime--;
@@ -49,9 +55,16 @@ void Monster::tick() {
 
 
 sf::Vector2f Monster::calculatePlayerDirection() {
+    if (game == nullptr) {
+        return {0, 0};
+    }
     return {
             game->player.getPosition() - getPosition()
     };
+}
+
+Combatant::Type Monster::getType() {
+    return Combatant::Type::Monster;
 }
 
 

@@ -2,6 +2,7 @@
 
 #include "include/Player.h"
 #include "include/Input.h"
+#include "include/Game.h"
 
 //
 // Created by Friedrich Tröscher on 08.02.25.
@@ -16,6 +17,10 @@ Player::Player(sf::Vector2f size, sf::Vector2f position, MovementBounds movement
 }
 
 void Player::tick() {
+    if (getHealth() <= 0) {
+        game->setGameOver();
+    }
+
     //update targetedPlayer shooting timeout and animation
     if (remainingReloadTime > 0) {
         remainingReloadTime--;
@@ -45,6 +50,10 @@ int Player::getLevel() const {
 
 void Player::setLevel(int value) {
     this->level = value;
+}
+
+Combatant::Type Player::getType() {
+    return Combatant::Type::Player;
 }
 
 

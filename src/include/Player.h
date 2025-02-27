@@ -24,6 +24,8 @@ public:
 
     void tick();
 
+    Combatant::Type getType();
+
 
 protected:
 

@@ -36,8 +36,15 @@ public:
 
     void setScoreboard(const Scoreboard &scoreboard);
 
+    std::vector<Combatant *> getAllCombatants();
+
+    void setGameOver();
+
+    bool getGameOver();
+
 protected:
 private:
+    bool gameOver;
 };
 
 

@@ -6,29 +6,33 @@
 #include <cmath>
 
 Projectile::Projectile(sf::Vector2f size, sf::Vector2f position, sf::Color color, sf::Vector2f velocity,
-                       int timeout, Game *game) {
+                       int timeout,
+                       Combatant::Type shotBy, float damage,
+                       Game *game) {
     setSize(size);
     setPosition(position);
     setFillColor(color);
     setVelocity(velocity);
     setTimeout(timeout);
     this->game = game;
+    setShotBy(shotBy);
+    setDamage(damage);
 }
 
 sf::Vector2f Projectile::getVelocity() {
     return this->velocity;
 }
 
-void Projectile::setVelocity(sf::Vector2f velocity) {
-    this->velocity = velocity;
+void Projectile::setVelocity(sf::Vector2f value) {
+    velocity = value;
 }
 
 int Projectile::getTimeout() {
     return this->timeout;
 }
 
-void Projectile::setTimeout(int timeout) {
-    this->timeout = timeout;
+void Projectile::setTimeout(int value) {
+    timeout = value;
 }
 
 sf::Vector2f Projectile::generateFixedDirectionVelocity(Direction direction, float speed) {
@@ -50,5 +54,27 @@ sf::Vector2f Projectile::generateFixedDirectionVelocity(Direction direction, flo
             return {-speed, 0};
         case Direction::UP_LEFT:
             return {-speed / sqrt2, -speed / sqrt2};
+        case Direction::NONE:
+            return {0, 0};
+    }
+}
+
+Combatant::Type Projectile::getShotBy() {
+    return shotBy;
+}
+
+void Projectile::setShotBy(Combatant::Type value) {
+    shotBy = value;
+}
+
+float Projectile::getDamage() const {
+    return damage;
+}
+
+void Projectile::setDamage(float value) {
+    if (damage >= 0) {
+        damage = value;
+    } else {
+        damage = 0.f;
     }
 }

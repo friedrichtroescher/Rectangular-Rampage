@@ -8,13 +8,21 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include "MovementBounds.h"
 #include "Direction.h"
-#include "Projectile.h"
+
 
 //this forward declaration is necessary to avoid an issue with circular dependencies in the game class
 class Game;
 
+class Projectile;
+
 class Combatant : public sf::RectangleShape, public MovementBounds {
 public:
+    enum class Type {
+        Player, Monster, Unknown
+    };
+
+    virtual Combatant::Type getType() = 0;
+
     float getHealth();
 
     Direction getDirection();

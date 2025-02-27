@@ -6,7 +6,9 @@
 
 //
 // Created by Friedrich Tröscher on 26.02.25.
-Game::Game() {};
+Game::Game() {
+    gameOver = false;
+};
 
 std::vector<Projectile> &Game::getProjectiles() {
     return projectiles;
@@ -38,4 +40,21 @@ void Game::setMonsters(const std::vector<Monster> &monsters) {
 
 void Game::setScoreboard(const Scoreboard &scoreboard) {
     Game::scoreboard = scoreboard;
+}
+
+std::vector<Combatant *> Game::getAllCombatants() {
+    std::vector<Combatant *> combatants;
+    combatants.push_back(&this->player); // Adding a pointer/reference to the actual player object
+    for (auto &monster: this->getMonsters()) {
+        combatants.push_back(&monster); // Adding pointers/references to actual monster objects
+    }
+    return combatants;
+}
+
+void Game::setGameOver() {
+    gameOver = true;
+}
+
+bool Game::getGameOver() {
+    return gameOver;
 }

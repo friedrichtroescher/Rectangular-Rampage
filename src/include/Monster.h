@@ -20,6 +20,8 @@ public:
 
     void tick() override;
 
+    Combatant::Type getType();
+
 protected:
 private:
     sf::Vector2f calculatePlayerDirection();
