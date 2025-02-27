@@ -3,19 +3,18 @@
 //
 
 #include "include/Monster.h"
-#include "include/Direction.h"
+#include "include/Game.h"
+
+Monster::Monster() : Combatant() {}
 
 Monster::Monster(sf::Vector2f size,
                  sf::Vector2f position,
                  MovementBounds movementBounds,
                  float walkingSpeed,
                  sf::Color color,
-                 float health, float damage, int totalReloadTime, std::vector<Projectile> &projectiles, Player
-                 &targetedPlayer)
+                 float health, float damage, int totalReloadTime, Game *game)
         :
-        Combatant(size, position, movementBounds, walkingSpeed, color, health, damage, totalReloadTime,
-                  projectiles), targetedPlayer(targetedPlayer) {
-
+        Combatant(size, position, movementBounds, walkingSpeed, color, health, damage, totalReloadTime, game) {
 };
 
 void Monster::tick() {
@@ -43,7 +42,7 @@ void Monster::tick() {
 
     //move the Monster towards the player if it is further than 5x player size away
     //Assumes square player
-    if (DirectionUtils::getDistanceFromVector(playerDirection) > 5 * targetedPlayer.getSize().x) {
+    if (DirectionUtils::getDistanceFromVector(playerDirection) > 5 * game->player.getSize().x) {
         walk(DirectionUtils::getDirectionFromVector(playerDirection), getWalkingSpeed());
     }
 }
@@ -51,6 +50,8 @@ void Monster::tick() {
 
 sf::Vector2f Monster::calculatePlayerDirection() {
     return {
-            targetedPlayer.getPosition() - getPosition()
+            game->player.getPosition() - getPosition()
     };
 }
+
+

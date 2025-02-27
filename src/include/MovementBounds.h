@@ -9,6 +9,8 @@
 
 class MovementBounds {
 public:
+    MovementBounds();
+
     MovementBounds(sf::Vector2f topLeft, sf::Vector2f bottomRight);
 
     MovementBounds getBounds();

@@ -34,3 +34,8 @@ void MovementBounds::setBounds(sf::Vector2f topLeft, sf::Vector2f bottomRight) {
 MovementBounds MovementBounds::getBounds() {
     return {topLeft, bottomRight};
 }
+
+MovementBounds::MovementBounds() {
+    topLeft = {0, 0};
+    bottomRight = {0, 0};
+}

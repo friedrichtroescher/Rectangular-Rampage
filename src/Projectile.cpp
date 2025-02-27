@@ -6,12 +6,13 @@
 #include <cmath>
 
 Projectile::Projectile(sf::Vector2f size, sf::Vector2f position, sf::Color color, sf::Vector2f velocity,
-                       int timeout) {
+                       int timeout, Game *game) {
     setSize(size);
     setPosition(position);
     setFillColor(color);
     setVelocity(velocity);
     setTimeout(timeout);
+    this->game = game;
 }
 
 sf::Vector2f Projectile::getVelocity() {

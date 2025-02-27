@@ -10,7 +10,7 @@
 
 class Scoreboard : public sf::RectangleShape {
 public:
-    Scoreboard(int health, int level);
+    Scoreboard();
 
     void draw(sf::RenderWindow &window);
 

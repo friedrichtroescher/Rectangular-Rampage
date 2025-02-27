@@ -5,26 +5,23 @@
 #ifndef CMAKESFMLPROJECT_MONSTER_H
 #define CMAKESFMLPROJECT_MONSTER_H
 
-
-#include "Player.h"
+#include "Combatant.h"
 
 class Monster : public Combatant {
 public:
+    Monster();
+
     Monster(sf::Vector2f size,
             sf::Vector2f position,
             MovementBounds movementBounds,
             float walkingSpeed,
             sf::Color color,
-            float health, float damage, int totalReloadTime, std::vector<Projectile> &projectiles,
-            Player &targetedPlayer);
+            float health, float damage, int totalReloadTime, Game *game);
 
     void tick() override;
 
-
 protected:
 private:
-    Player &targetedPlayer;
-
     sf::Vector2f calculatePlayerDirection();
 };
 

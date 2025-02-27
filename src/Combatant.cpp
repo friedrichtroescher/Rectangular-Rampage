@@ -2,14 +2,13 @@
 
 #include "include/Combatant.h"
 #include "include/Projectile.h"
-
+#include "include/Game.h"
 //
 // Created by Friedrich Tröscher on 15.02.25.
 
 Combatant::Combatant(sf::Vector2f size, sf::Vector2f position, MovementBounds movementBounds, float walkingSpeed,
-                     sf::Color color, float health, float damage, int totalReloadTime,
-                     std::vector<Projectile> &projectiles)
-        : MovementBounds(movementBounds), projectiles(projectiles) {
+                     sf::Color color, float health, float damage, int totalReloadTime, Game *game)
+        : MovementBounds(movementBounds) {
 
     setSize(size);
     setPosition(position);
@@ -19,6 +18,7 @@ Combatant::Combatant(sf::Vector2f size, sf::Vector2f position, MovementBounds mo
     setDirection(Direction::NONE);
     setDamage(damage);
     setTotalReloadTime(totalReloadTime);
+    this->game = game;
 }
 
 float Combatant::getHealth() {
@@ -35,6 +35,10 @@ void Combatant::setHealth(float value) {
 
 
 void Combatant::shoot(sf::Vector2f projectileSize, int timeout, sf::Color color, float speed) {
+    if (game == nullptr) {
+        return;
+    }
+
     //don't shoot if Combatant is reloading
     if (getRemainingReloadTime() > 0) {
         return;
@@ -47,9 +51,9 @@ void Combatant::shoot(sf::Vector2f projectileSize, int timeout, sf::Color color,
                                                                             projectileSize.y) /
                                                                            2.f},
                                         color,
-                                        Projectile::generateFixedDirectionVelocity(getDirection(), speed), timeout));
-
-    projectiles.push_back(projectile);
+                                        Projectile::generateFixedDirectionVelocity(getDirection(), speed),
+                                        timeout, game));
+    game->projectiles.push_back(projectile);
 
     //start the reload timer
     setRemainingReloadTime(getTotalReloadTime());
@@ -187,6 +191,10 @@ void Combatant::setRemainingReloadTime(int value) {
 
 void Combatant::shootPrecisely(sf::Vector2f projectileSize, int timeout, sf::Color color, float speed,
                                sf::Vector2f projectileMovement) {
+    if (game == nullptr) {
+        return;
+    }
+
     //don't shoot if Combatant is reloading
     if (getRemainingReloadTime() > 0) {
         return;
@@ -199,10 +207,30 @@ void Combatant::shootPrecisely(sf::Vector2f projectileSize, int timeout, sf::Col
                                                                             projectileSize.y) /
                                                                            2.f},
                                         color,
-                                        projectileMovement, timeout));
+                                        projectileMovement, timeout, game));
 
-    projectiles.push_back(projectile);
+    game->projectiles.push_back(projectile);
 
     //start the reload timer
     setRemainingReloadTime(getTotalReloadTime());
+}
+
+Combatant::Combatant() {
+    setSize({10, 10});
+    setPosition({0, 0});
+    setFillColor(sf::Color::White);
+    setHealth(100);
+    setWalkingSpeed(1);
+    setDirection(Direction::NONE);
+    setDamage(1);
+    setTotalReloadTime(1);
+    setGame(nullptr);
+}
+
+Game *Combatant::getGame() const {
+    return game;
+}
+
+void Combatant::setGame(Game *game) {
+    Combatant::game = game;
 }

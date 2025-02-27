@@ -34,6 +34,8 @@ add_executable(main src/main.cpp
         src/include/GameLoop.h
         src/Monster.cpp
         src/include/Monster.h
+        src/Game.cpp
+        src/include/Game.h
 )
 
 set(FONT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src/resources/fonts")

@@ -1,19 +1,17 @@
 //
-// Created by Friedrich Tröscher on 08.02.25.
-//
 
 #include "include/Player.h"
 #include "include/Input.h"
-#include "include/MovementBounds.h"
-#include <SFML/Graphics.hpp>
-#include <cmath>
+
+//
+// Created by Friedrich Tröscher on 08.02.25.
+Player::Player() : Combatant() {}
 
 Player::Player(sf::Vector2f size, sf::Vector2f position, MovementBounds movementBounds, float walkingSpeed,
-               sf::Color color, float health, float damage, int totalReloadTime, int level,
-               std::vector<Projectile> &projectiles)
+               sf::Color color,
+               float health, float damage, int totalReloadTime, int level, Game *game)
         : Combatant(size, position, movementBounds,
-                    walkingSpeed, color, health, damage, totalReloadTime,
-                    projectiles) {
+                    walkingSpeed, color, health, damage, totalReloadTime, game) {
     setLevel(level);
 }
 
@@ -48,5 +46,7 @@ int Player::getLevel() const {
 void Player::setLevel(int value) {
     this->level = value;
 }
+
+
 
 

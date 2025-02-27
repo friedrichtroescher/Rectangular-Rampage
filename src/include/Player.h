@@ -5,23 +5,15 @@
 #ifndef CMAKESFMLPROJECT_PLAYER_H
 #define CMAKESFMLPROJECT_PLAYER_H
 
-
-#include <SFML/Graphics/RectangleShape.hpp>
-#include "Direction.h"
-#include "Projectile.h"
-#include "MovementBounds.h"
 #include "Combatant.h"
 
 class Player : public Combatant {
 public:
+    Player();
+
     //Constructor
-    Player(sf::Vector2f size,
-           sf::Vector2f position,
-           MovementBounds movementBounds,
-           float walkingSpeed,
-           sf::Color color,
-           float health, float damage, int totalReloadTime,
-           int level, std::vector<Projectile> &projectiles);
+    Player(sf::Vector2f size, sf::Vector2f position, MovementBounds movementBounds, float walkingSpeed, sf::Color color,
+           float health, float damage, int totalReloadTime, int level, Game *game);
 
 
     //Getters

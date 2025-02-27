@@ -8,10 +8,13 @@
 #include <SFML/Graphics.hpp>
 #include "Direction.h"
 
+class Game;
+
 class Projectile : public sf::RectangleShape {
 public:
     //Constructor
-    Projectile(sf::Vector2f size, sf::Vector2f position, sf::Color color, sf::Vector2f velocity, int timeout);
+    Projectile(sf::Vector2f size, sf::Vector2f position, sf::Color color, sf::Vector2f velocity, int timeout,
+               Game *game);
 
     //Getters
     sf::Vector2f getVelocity();
@@ -29,7 +32,7 @@ protected:
 private:
     sf::Vector2f velocity;
     int timeout;
-
+    Game *game;
 };
 
 

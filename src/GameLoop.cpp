@@ -11,33 +11,35 @@
 #include "include/Scoreboard.h"
 #include "include/Projectile.h"
 #include "include/Monster.h"
+#include "include/Game.h"
 
 void GameLoop::run() {
     //window initialization
     auto window = sf::RenderWindow(sf::VideoMode({1280u, 720u}), "Rectangular Rampage");
     window.setFramerateLimit(60);
 
-    std::vector<Projectile> projectiles;
+    //initialize game
+    Game *game = new Game();
 
-    Player player({10, 10}, {10, 10}, MovementBounds({0, 0},
-                                                     {1280, 648}),
-                  3.f, sf::Color::White, 100, 1, 120, 1,
-                  projectiles);
+    game->player = Player({10, 10}, {10, 10}, MovementBounds({0, 0},
+                                                             {1280, 648}),
+                          3.f, sf::Color::White, 100, 1, 120, 1, game);
+    game->scoreboard.setPosition({0, 648});
 
-    std::vector<Monster> monsters;
+    game->monsters[0] = Monster({10, 10}, {float((rand() % window.getSize().x)), float((rand() % window.getSize().y))},
+                                MovementBounds({0, 0},
+                                               {1280, 648}),
+                                (0.5 + (rand() % 100) / 400.f), sf::Color::Green, 100, 1, 120, game);
+
     for (int i = 0; i < 10; i++) {
-        monsters.push_back(Monster({10, 10}, {float((rand() % 1280)), float((rand() % 648))},
-                                   MovementBounds({0, 0},
-                                                  {1280, 648}),
-                                   (0.5 + (rand() % 100) / 400.f), sf::Color::Green, 100, 1, 120, projectiles, player));
+        game->monsters.push_back(
+                Monster({10, 10}, {float((rand() % window.getSize().x)), float((rand() % window.getSize().y))},
+                        MovementBounds({0, 0},
+                                       {1280, 648}),
+                        (0.5 + (rand() % 100) / 400.f), sf::Color::Green, 100, 1, 120, game));
         //to make monsters not shoot all at the same time, they are initialized with a randomized initial reload time
-        monsters[i].setRemainingReloadTime(rand() % monsters[i].getTotalReloadTime());
+        game->monsters[i].setRemainingReloadTime(rand() % game->monsters[i].getTotalReloadTime());
     }
-
-
-    Scoreboard scoreboard(0, 0);
-    scoreboard.setPosition({0, 648});
-
 
     while (window.isOpen()) {
         // Standard SFML event loop
@@ -52,14 +54,15 @@ void GameLoop::run() {
 
 
         // update projectiles
-        for (auto &projectile: projectiles) {
-            auto new_end = std::remove_if(projectiles.begin(), projectiles.end(), [](Projectile projectile) {
-                if (projectile.getTimeout() <= 0) {
-                    return true;
-                }
-                return false;
-            });
-            projectiles.erase(new_end, projectiles.end());
+        for (auto &projectile: game->projectiles) {
+            auto new_end = std::remove_if(game->projectiles.begin(), game->projectiles.end(),
+                                          [](Projectile projectile) {
+                                              if (projectile.getTimeout() <= 0) {
+                                                  return true;
+                                              }
+                                              return false;
+                                          });
+            game->projectiles.erase(new_end, game->projectiles.end());
 
 
             projectile.setTimeout(projectile.getTimeout() - 1);
@@ -69,15 +72,15 @@ void GameLoop::run() {
         }
 
         //Movement, shooting update for targetedPlayer
-        player.tick();
-        player.draw(window);
+        game->player.tick();
+        game->player.draw(window);
 
         //scoreboard handling
-        scoreboard.update(player);
-        scoreboard.draw(window);
+        game->scoreboard.update(game->player);
+        game->scoreboard.draw(window);
 
         //Handle monster vector
-        for (auto &monster: monsters) {
+        for (auto &monster: game->monsters) {
             monster.tick();
             monster.draw(window);
         }

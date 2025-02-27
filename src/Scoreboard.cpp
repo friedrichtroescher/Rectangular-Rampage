@@ -5,9 +5,10 @@
 #include "include/Scoreboard.h"
 #include "include/Player.h"
 
-Scoreboard::Scoreboard(int health, int level) {
-    setHealth(health);
-    setLevel(level);
+
+Scoreboard::Scoreboard() {
+    setHealth(100);
+    setLevel(1);
     setSize({1280, 72});
     setOutlineColor(sf::Color(100, 100, 100, 255));
     setFillColor(sf::Color::Black);

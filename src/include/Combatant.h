@@ -10,6 +10,8 @@
 #include "Direction.h"
 #include "Projectile.h"
 
+//this forward declaration is necessary to avoid an issue with circular dependencies in the game class
+class Game;
 
 class Combatant : public sf::RectangleShape, public MovementBounds {
 public:
@@ -50,11 +52,16 @@ public:
 
     void setRemainingReloadTime(int value);
 
+    Game *getGame() const;
+
+    void setGame(Game *game);
+
 protected:
+    Combatant();
+
     Combatant(sf::Vector2f size, sf::Vector2f position, MovementBounds movementBounds, float walkingSpeed,
               sf::Color color,
-              float health, float damage, int totalReloadTime, std::vector<Projectile> &projectiles);
-
+              float health, float damage, int totalReloadTime, Game *game);
 
     float health{};
     float damage{};
@@ -62,7 +69,7 @@ protected:
     int totalReloadTime{};
     Direction direction;
     float walkingSpeed{};
-    std::vector<Projectile> &projectiles;
+    Game *game;
 private:
 };
 
