@@ -23,8 +23,7 @@ void GameLoop::run() {
     game->player = Player({10, 10}, {10, 10}, MovementBounds({0, 0},
                                                              {1280, 648}),
                           3.f, sf::Color::White, 0, 100, 15, 0, game);
-    game->scoreboard.setPosition({0, 648});
-
+    game->scoreboard = Scoreboard({0, 648}, {1280, 72}, sf::Color::Black, -5, sf::Color(100, 100, 100, 255), game);
 
     while (window.isOpen()) {
         // Standard SFML event loop
@@ -85,8 +84,7 @@ void GameLoop::run() {
         game->player.tick();
         window.draw(game->player);
 
-        //scoreboard handling
-        game->scoreboard.update(game->player);
+        //no need to do a scoreboard tick, scoreboard knows about the game object and retrieves values by itself
         game->scoreboard.draw(window);
 
         //handle monster vector

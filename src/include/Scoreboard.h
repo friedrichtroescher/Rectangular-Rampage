@@ -13,18 +13,10 @@ class Scoreboard : public sf::RectangleShape {
 public:
     Scoreboard();
 
+    Scoreboard(sf::Vector2f position, sf::Vector2f size, sf::Color fillColor, float outlineThickness,
+               sf::Color outlineColor, Game *game);
+
     void draw(sf::RenderWindow &window);
-
-    void setHealth(float value);
-
-    void setLevel(int value);
-
-    float getHealth();
-
-    int getLevel();
-
-    //updates the scoreboard with the player's health and level
-    void update(Player &player);
 
 protected:
 private:
