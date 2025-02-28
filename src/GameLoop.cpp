@@ -62,9 +62,6 @@ void GameLoop::run() {
             for (auto &combatant: game->getAllCombatants()) {
                 // Check if the projectile collides with them
                 if (combatant->getGlobalBounds().findIntersection(projectile.getGlobalBounds()) != std::nullopt) {
-                    Combatant::Type shotBy = projectile.getShotBy();
-                    Combatant::Type victimType = combatant->getType();
-
                     // Check for valid collision
                     if (projectile.getShotBy() != combatant->getType()) {
                         combatant->setHealth(combatant->getHealth() - projectile.getDamage());
