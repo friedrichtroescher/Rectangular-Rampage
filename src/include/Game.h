@@ -28,6 +28,8 @@ public:
     std::vector<Monster> monsters;
     Scoreboard scoreboard;
 
+    void spawnMonsters(int count);
+
     void setPlayer(const Player &player);
 
     void setProjectiles(const std::vector<Projectile> &projectiles);

@@ -22,18 +22,9 @@ void GameLoop::run() {
 
     game->player = Player({10, 10}, {10, 10}, MovementBounds({0, 0},
                                                              {1280, 648}),
-                          3.f, sf::Color::White, 100, 100, 120, 1, game);
+                          3.f, sf::Color::White, 100, 100, 15, 0, game);
     game->scoreboard.setPosition({0, 648});
 
-    for (int i = 0; i < 10; i++) {
-        game->monsters.push_back(
-                Monster({10, 10}, {float((rand() % window.getSize().x)), float((rand() % window.getSize().y))},
-                        MovementBounds({0, 0},
-                                       {1280, 648}),
-                        (0.5 + (rand() % 100) / 400.f), sf::Color::Green, 100, 1, 120, game));
-        //to make monsters not shoot all at the same time, they are initialized with a randomized initial reload time
-        game->monsters[i].setRemainingReloadTime(rand() % game->monsters[i].getTotalReloadTime());
-    }
 
     while (window.isOpen()) {
         // Standard SFML event loop
@@ -46,7 +37,11 @@ void GameLoop::run() {
         // initialize a new Frame
         window.clear(sf::Color::Black);
 
-
+        //initialize and update level with monsters
+        if (game->monsters.size() == 0) {
+            game->player.setLevel(game->player.getLevel() + 1);
+            game->spawnMonsters(game->player.getLevel() * 2 + 3);
+        }
 
         // update projectiles
         for (auto &projectile: game->projectiles) {

@@ -58,3 +58,22 @@ void Game::setGameOver() {
 bool Game::getGameOver() {
     return gameOver;
 }
+
+void Game::spawnMonsters(int count) {
+    if (count <= 0) {
+        return;
+    }
+
+    for (int i = 0; i < count; i++) {
+        MovementBounds movementBounds = player.getBounds();
+
+        monsters.push_back(
+                Monster({10, 10}, {float((rand() % int(movementBounds.getBottomRightBound().x))),
+                                   float((rand() % int(movementBounds.getBottomRightBound().y)))},
+                        MovementBounds({0, 0},
+                                       {1280, 648}),
+                        (0.5 + (rand() % 100) / 400.f), sf::Color::Green, 100, 1, 120, this));
+        //to make monsters not shoot all at the same time, they are initialized with a randomized initial reload time
+        monsters[i].setRemainingReloadTime(rand() % monsters[i].getTotalReloadTime());
+    }
+}
