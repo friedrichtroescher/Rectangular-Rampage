@@ -47,14 +47,15 @@ public:
 
     virtual void tick() = 0;
 
-    void draw(sf::RenderWindow &window);
-
     void walk(Direction direction, float distance);
 
     float boundDistance(Direction direction);
 
+    //shoots a projectile in the direction the Combatant is facing, this is not precise
     void shoot(sf::Vector2f projectileSize, int timeout, sf::Color color, float speed);
 
+    //shoots a projectile in the direction specified by projectileMovement, adjusted to speed specified
+    //this was implemented to allow Monsters to target the player precisely, but could be implemented for the player as well
     void shootPrecisely(sf::Vector2f projectileSize, int timeout, sf::Color color, float speed, sf::Vector2f
     projectileMovement);
 
@@ -77,6 +78,7 @@ protected:
     int totalReloadTime{};
     Direction direction;
     float walkingSpeed{};
+    //pointer to the game object, so that the Combatant can interact with other game elements
     Game *game;
 private:
 };

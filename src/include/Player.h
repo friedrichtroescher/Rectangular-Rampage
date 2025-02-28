@@ -7,6 +7,7 @@
 
 #include "Combatant.h"
 
+//Player is a subclass of Combatant, implementing some functionality specific to the player but common with Monster Class
 class Player : public Combatant {
 public:
     Player();

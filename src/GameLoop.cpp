@@ -22,7 +22,7 @@ void GameLoop::run() {
 
     game->player = Player({10, 10}, {10, 10}, MovementBounds({0, 0},
                                                              {1280, 648}),
-                          3.f, sf::Color::White, 100, 100, 15, 0, game);
+                          3.f, sf::Color::White, 0, 100, 15, 0, game);
     game->scoreboard.setPosition({0, 648});
 
 
@@ -34,11 +34,16 @@ void GameLoop::run() {
             }
         }
 
+        if (game->getGameOver()) {
+            continue;
+        }
+
         // initialize a new Frame
         window.clear(sf::Color::Black);
 
         //initialize and update level with monsters
-        if (game->monsters.size() == 0) {
+        if (game->monsters.empty()) {
+            game->player.setHealth(10);
             game->player.setLevel(game->player.getLevel() + 1);
             game->spawnMonsters(game->player.getLevel() * 2 + 3);
         }
@@ -78,7 +83,7 @@ void GameLoop::run() {
 
         //Movement, shooting update for targetedPlayer
         game->player.tick();
-        game->player.draw(window);
+        window.draw(game->player);
 
         //scoreboard handling
         game->scoreboard.update(game->player);
@@ -94,7 +99,7 @@ void GameLoop::run() {
             } else {
                 // Only increment the index if no erasure occurred
                 monster.tick();
-                monster.draw(window);
+                window.draw(monster);
                 ++index;
             }
         }
@@ -104,9 +109,7 @@ void GameLoop::run() {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::I)) {
 
         }
-        if (game->getGameOver()) {
-            break;
-        }
+
 
         window.display();
     }

@@ -19,8 +19,12 @@ Scoreboard::Scoreboard() {
     }
 }
 
-void Scoreboard::setHealth(int value) {
-    if (value < 0 || value > 100) {
+void Scoreboard::setHealth(float value) {
+    if (value < 0) {
+        health = 0;
+        return;
+    } else if (value > 100) {
+        health = 100;
         return;
     }
     health = value;
@@ -33,7 +37,7 @@ void Scoreboard::setLevel(int value) {
     level = value;
 }
 
-int Scoreboard::getHealth() {
+float Scoreboard::getHealth() {
     return health;
 }
 
@@ -53,7 +57,7 @@ void Scoreboard::draw(sf::RenderWindow &window) {
                             getPosition().y + getSize().y / 2.f - healthText.getCharacterSize() / 2.f});
 
     //health bar indicator
-    sf::RectangleShape healthBar({float(getHealth()) * 8, 20});
+    sf::RectangleShape healthBar({float(getHealth() * 8.f), 20});
     healthBar.setPosition(
             {getPosition().x + healthText.getLocalBounds().size.x + healthText.getLocalBounds().size.x / 5,
              getPosition().y + getSize().y / 2.f - healthBar.getSize().y / 2.f});
@@ -71,8 +75,6 @@ void Scoreboard::draw(sf::RenderWindow &window) {
     window.draw(healthText);
     window.draw(healthBar);
     window.draw(levelText);
-
-
 }
 
 void Scoreboard::update(Player &player) {

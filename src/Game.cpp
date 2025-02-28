@@ -55,7 +55,7 @@ void Game::setGameOver() {
     gameOver = true;
 }
 
-bool Game::getGameOver() {
+bool Game::getGameOver() const {
     return gameOver;
 }
 
@@ -63,16 +63,19 @@ void Game::spawnMonsters(int count) {
     if (count <= 0) {
         return;
     }
+    //monsters get smaller up until level 10, then they stay at a minimum size of 10
+    float monsterSize = std::max(10.f, (15 - (float(player.getLevel()) * 0.5f)));
 
     for (int i = 0; i < count; i++) {
         MovementBounds movementBounds = player.getBounds();
-
+        //the Player level is used as a multiplier in some fields to make the game harder with increasing levels
         monsters.push_back(
-                Monster({10, 10}, {float((rand() % int(movementBounds.getBottomRightBound().x))),
-                                   float((rand() % int(movementBounds.getBottomRightBound().y)))},
+                Monster({monsterSize, monsterSize}, {float((rand() % int(movementBounds.getBottomRightBound().x))),
+                                                     float((rand() % int(movementBounds.getBottomRightBound().y)))},
                         MovementBounds({0, 0},
                                        {1280, 648}),
-                        (0.5 + (rand() % 100) / 400.f), sf::Color::Green, 100, 1, 120, this));
+                        (0.5 + (rand() % 100) / 400.f), sf::Color::Green, 100, float(player.getLevel()) * 3.f + 1.5,
+                        120, this));
         //to make monsters not shoot all at the same time, they are initialized with a randomized initial reload time
         monsters[i].setRemainingReloadTime(rand() % monsters[i].getTotalReloadTime());
     }

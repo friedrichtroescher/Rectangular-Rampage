@@ -109,10 +109,6 @@ void Combatant::walk(Direction direction, float distance) {
     }
 }
 
-void Combatant::draw(sf::RenderWindow &window) {
-    //draw the targetedPlayer
-    window.draw(*this);
-}
 
 float Combatant::boundDistance(Direction direction) {
     auto topLeftBound = getTopLeftBound();

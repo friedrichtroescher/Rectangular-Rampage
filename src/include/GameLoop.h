@@ -5,6 +5,7 @@
 #ifndef CMAKESFMLPROJECT_GAMELOOP_H
 #define CMAKESFMLPROJECT_GAMELOOP_H
 
+//GameLoop is the main class of the game, running all "top-level" game logic
 
 class GameLoop {
 public:

@@ -8,27 +8,30 @@
 #include <SFML/Graphics.hpp>
 #include "Player.h"
 
+//Scoreboard is a class that displays the health and level of the player. It should only be drawn with the draw method, never with window.draw(scoreboard)
 class Scoreboard : public sf::RectangleShape {
 public:
     Scoreboard();
 
     void draw(sf::RenderWindow &window);
 
-    void setHealth(int value);
+    void setHealth(float value);
 
     void setLevel(int value);
 
-    int getHealth();
+    float getHealth();
 
     int getLevel();
 
+    //updates the scoreboard with the player's health and level
     void update(Player &player);
 
 protected:
 private:
-    int health{};
+    float health{};
     int level{};
     sf::Font pressStart2PRegular;
+    Game *game;
 };
 
 

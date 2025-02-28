@@ -10,6 +10,7 @@
 #include "Projectile.h"
 #include "Monster.h"
 
+//The game class is used to collect all entities of the game, so that passing the game reference to those entities enables them to access other elements of the game
 
 class Game {
 public:
@@ -42,7 +43,7 @@ public:
 
     void setGameOver();
 
-    bool getGameOver();
+    bool getGameOver() const;
 
 protected:
 private:

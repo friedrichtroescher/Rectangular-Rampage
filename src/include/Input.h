@@ -8,6 +8,7 @@
 
 #include "Direction.h"
 
+//Input just provides some tooling for getting input from the player
 class Input {
 public:
     static Direction getWASDDirection();
