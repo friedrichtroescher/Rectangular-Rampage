@@ -27,6 +27,7 @@ This project was developed and tested on Mac OS Sequoia 15.3.1 (24D70).
 
 4. Navigate to the `build/bin` directory and execute the program:
    ```
+   cd bin
    ./main
    ```
 
