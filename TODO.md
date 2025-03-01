@@ -1,5 +1,0 @@
-- enemies
-- sound effects
-- Game over screen
-- NO: main menu?
-- MAYBE: music?
