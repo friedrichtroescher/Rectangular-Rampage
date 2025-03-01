@@ -1,9 +1,8 @@
+#pragma once
 //
 // Created by Friedrich Tröscher on 18.02.25.
 //
 
-#ifndef CMAKESFMLPROJECT_DIRECTION_H
-#define CMAKESFMLPROJECT_DIRECTION_H
 
 #include <SFML/Graphics.hpp>
 
@@ -30,4 +29,3 @@ public:
 };
 
 
-#endif //CMAKESFMLPROJECT_DIRECTION_H

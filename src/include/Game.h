@@ -1,9 +1,8 @@
+#pragma once
 //
 // Created by Friedrich Tröscher on 26.02.25.
 //
 
-#ifndef CMAKESFMLPROJECT_GAME_H
-#define CMAKESFMLPROJECT_GAME_H
 
 #include "Player.h"
 #include "Scoreboard.h"
@@ -62,4 +61,3 @@ private:
 };
 
 
-#endif //CMAKESFMLPROJECT_GAME_H

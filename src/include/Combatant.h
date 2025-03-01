@@ -1,9 +1,8 @@
+#pragma once
 //
 // Created by Friedrich Tröscher on 15.02.25.
 //
 
-#ifndef CMAKESFMLPROJECT_COMBATANT_H
-#define CMAKESFMLPROJECT_COMBATANT_H
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include "Direction.h"
@@ -90,4 +89,3 @@ private:
 };
 
 
-#endif //CMAKESFMLPROJECT_COMBATANT_H

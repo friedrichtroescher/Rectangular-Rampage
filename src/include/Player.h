@@ -1,9 +1,8 @@
+#pragma once
 //
 // Created by Friedrich Tröscher on 08.02.25.
 //
 
-#ifndef CMAKESFMLPROJECT_PLAYER_H
-#define CMAKESFMLPROJECT_PLAYER_H
 
 #include "Combatant.h"
 
@@ -37,4 +36,3 @@ private:
 };
 
 
-#endif //CMAKESFMLPROJECT_PLAYER_H

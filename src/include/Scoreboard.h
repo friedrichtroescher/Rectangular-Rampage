@@ -1,9 +1,8 @@
+#pragma once
 //
 // Created by Friedrich Tröscher on 12.02.25.
 //
 
-#ifndef CMAKESFMLPROJECT_SCOREBOARD_H
-#define CMAKESFMLPROJECT_SCOREBOARD_H
 
 #include <SFML/Graphics.hpp>
 #include "Player.h"
@@ -46,4 +45,3 @@ private:
 };
 
 
-#endif //CMAKESFMLPROJECT_SCOREBOARD_H

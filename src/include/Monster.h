@@ -1,9 +1,8 @@
+#pragma once
 //
 // Created by Friedrich Tröscher on 14.02.25.
 //
 
-#ifndef CMAKESFMLPROJECT_MONSTER_H
-#define CMAKESFMLPROJECT_MONSTER_H
 
 #include "Combatant.h"
 
@@ -29,4 +28,3 @@ private:
 };
 
 
-#endif //CMAKESFMLPROJECT_MONSTER_H

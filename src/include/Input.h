@@ -1,9 +1,8 @@
+#pragma once
 //
 // Created by Friedrich Tröscher on 08.02.25.
 //
 
-#ifndef CMAKESFMLPROJECT_INPUT_H
-#define CMAKESFMLPROJECT_INPUT_H
 
 
 #include "Direction.h"
@@ -17,4 +16,3 @@ public:
 };
 
 
-#endif //CMAKESFMLPROJECT_INPUT_H
