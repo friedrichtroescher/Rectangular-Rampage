@@ -12,7 +12,7 @@ Scoreboard::Scoreboard() {
 
 Scoreboard::Scoreboard(sf::Vector2f position, sf::Vector2f size, sf::Color fillColor, float outlineThickness,
                        sf::Color outlineColor, Game *game) {
-    if (!getPressStart2PRegular().openFromFile("fonts/PressStart2P-Regular.ttf")) {
+    if (!pressStart2PRegular.openFromFile("fonts/PressStart2P-Regular.ttf")) {
         // TODO Error handling
     }
     setPosition(position);
