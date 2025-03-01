@@ -37,7 +37,7 @@ This project was developed and tested on Mac OS Sequoia 15.3.1 (24D70).
 
 ### Movement
 
-Control the Player by using our choice of WASD or arrow buttons.
+Control the Player by using your choice of WASD or arrow buttons.
 
 ### Shooting
 
