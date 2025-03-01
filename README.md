@@ -7,6 +7,8 @@ Hackbart at Hochschule für Wirtschaft und Recht Berlin.
 
 ## How to Build and Run
 
+This project was developed and tested on Mac OS Sequoia 15.3.1 (24D70).
+
 1. Create a build directory and navigate into it:
    ```
    mkdir build
@@ -27,6 +29,8 @@ Hackbart at Hochschule für Wirtschaft und Recht Berlin.
    ```
    ./main
    ```
+
+**Mac OS might prompt you to allow input monitoring for your terminal - this is required to handle keyboard inputs.**
 
 ## Game basics
 
