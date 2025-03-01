@@ -3,7 +3,7 @@
 A minimalist, top-down retro shooter featuring wave-based gameplay.
 
 This repository is a project work for the 4th Semester Computer Science Course "Programming in C++", lectured by David
-Hackbart at Hochschule für Wirtschaft und Recht Berlin.
+Hackbarth at Hochschule für Wirtschaft und Recht Berlin.
 
 ## How to Build and Run
 
@@ -49,6 +49,13 @@ Each level spawns Monsters that you need to take care of, but watch out! **They 
 sure to dodge their projectiles. Once you defeat all Monsters, you level up. A level up **refills your health**, **buffs
 your
 capabilities** and **spawns a new and stronger wave of Monsters**.
+
+## Notes
+
+Please note that this project was developed under the official timeframe of **4** hours. Most notably, the following things are expected behaviour and stem from the severe time constraint:
+- Resizing the Window is not supported
+- If you lose, you are shown the last frame. To play again, please restart the game manually.
+
 
 ## Licenses
 
