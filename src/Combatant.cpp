@@ -53,7 +53,7 @@ void Combatant::shoot(sf::Vector2f projectileSize, int timeout, sf::Color color,
                                         color,
                                         Projectile::generateFixedDirectionVelocity(getDirection(), speed),
                                         timeout, getType(), getDamage(), game));
-    game->projectiles.push_back(projectile);
+    game->getProjectiles().push_back(projectile);
 
     //start the reload timer
     setRemainingReloadTime(getTotalReloadTime());
@@ -205,7 +205,7 @@ void Combatant::shootPrecisely(sf::Vector2f projectileSize, int timeout, sf::Col
                                         color,
                                         projectileMovement, timeout, Combatant::Type::Monster, getDamage(), game));
 
-    game->projectiles.push_back(projectile);
+    game->getProjectiles().push_back(projectile);
 
     //start the reload timer
     setRemainingReloadTime(getTotalReloadTime());

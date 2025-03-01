@@ -48,7 +48,7 @@ void Monster::tick() {
 
     //move the Monster towards the player if it is further than 5x player size away
     //Assumes square player
-    if (DirectionUtils::getDistanceFromVector(playerDirection) > 5 * game->player.getSize().x) {
+    if (DirectionUtils::getDistanceFromVector(playerDirection) > 5 * game->getPlayer().getSize().x) {
         walk(DirectionUtils::getDirectionFromVector(playerDirection), getWalkingSpeed());
     }
 }
@@ -59,7 +59,7 @@ sf::Vector2f Monster::calculatePlayerDirection() {
         return {0, 0};
     }
     return {
-            game->player.getPosition() - getPosition()
+            game->getPlayer().getPosition() - getPosition()
     };
 }
 

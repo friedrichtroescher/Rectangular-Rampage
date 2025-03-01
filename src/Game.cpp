@@ -4,11 +4,11 @@
 #include "include/Player.h"
 #include "include/Scoreboard.h"
 
-//
 // Created by Friedrich Tröscher on 26.02.25.
-Game::Game() {
+Game::Game(sf::RenderWindow *renderWindow) {
+    setRenderWindow(renderWindow);
     gameOver = false;
-};
+}
 
 std::vector<Projectile> &Game::getProjectiles() {
     return projectiles;
@@ -26,20 +26,20 @@ Scoreboard &Game::getScoreboard() {
     return scoreboard;
 }
 
-void Game::setPlayer(const Player &player) {
-    Game::player = player;
+void Game::setPlayer(const Player &pointer) {
+    player = pointer;
 }
 
-void Game::setProjectiles(const std::vector<Projectile> &projectiles) {
-    Game::projectiles = projectiles;
+void Game::setProjectiles(const std::vector<Projectile> &pointer) {
+    projectiles = pointer;
 }
 
-void Game::setMonsters(const std::vector<Monster> &monsters) {
-    Game::monsters = monsters;
+void Game::setMonsters(const std::vector<Monster> &pointer) {
+    monsters = pointer;
 }
 
-void Game::setScoreboard(const Scoreboard &scoreboard) {
-    Game::scoreboard = scoreboard;
+void Game::setScoreboard(const Scoreboard &pointer) {
+    scoreboard = pointer;
 }
 
 std::vector<Combatant *> Game::getAllCombatants() {
@@ -79,4 +79,48 @@ void Game::spawnMonsters(int count) {
         //to make monsters not shoot all at the same time, they are initialized with a randomized initial reload time
         monsters[i].setRemainingReloadTime(rand() % monsters[i].getTotalReloadTime());
     }
+}
+
+void Game::tickProjectiles() {
+    // update projectiles
+    for (auto &projectile: projectiles) {
+        auto new_end = std::remove_if(projectiles.begin(), projectiles.end(),
+                                      [](Projectile projectile) {
+                                          if (projectile.getTimeout() <= 0) {
+                                              return true;
+                                          }
+                                          return false;
+                                      });
+        projectiles.erase(new_end, projectiles.end());
+
+        // Iterate over all combatants
+        for (auto &combatant: getAllCombatants()) {
+            // Check if the projectile collides with them
+            if (combatant->getGlobalBounds().findIntersection(projectile.getGlobalBounds()) != std::nullopt) {
+                // Check for valid collision
+                if (projectile.getShotBy() != combatant->getType()) {
+                    combatant->setHealth(combatant->getHealth() - projectile.getDamage());
+                    projectile.setTimeout(0);
+                }
+            }
+        }
+
+
+        projectile.setTimeout(projectile.getTimeout() - 1);
+
+        projectile.move(projectile.getVelocity());
+        getRenderWindow()->draw(projectile);
+    }
+}
+
+void Game::tickMonsters() {
+
+}
+
+sf::RenderWindow *Game::getRenderWindow() const {
+    return renderWindow;
+}
+
+void Game::setRenderWindow(sf::RenderWindow *pointer) {
+    renderWindow = pointer;
 }

@@ -47,14 +47,14 @@ void Scoreboard::draw(sf::RenderWindow &window) {
                             getPosition().y + getSize().y / 2.f - healthText.getCharacterSize() / 2.f});
 
     //health bar indicator
-    sf::RectangleShape healthBar({std::max(0.f, float(game->player.getHealth()) * 8.f), 20});
+    sf::RectangleShape healthBar({std::max(0.f, float(game->getPlayer().getHealth()) * 8.f), 20});
     healthBar.setPosition(
             {getPosition().x + healthText.getLocalBounds().size.x + healthText.getLocalBounds().size.x / 5,
              getPosition().y + getSize().y / 2.f - healthBar.getSize().y / 2.f});
     healthBar.setFillColor(sf::Color::Red);
 
     //Level indicator
-    sf::Text levelText(pressStart2PRegular, "Level: " + std::to_string(game->player.getLevel()));
+    sf::Text levelText(pressStart2PRegular, "Level: " + std::to_string(game->getPlayer().getLevel()));
     levelText.setCharacterSize(20);
     levelText.setFillColor(sf::Color::White);
     levelText.setPosition({getPosition().x + getSize().x - levelText.getLocalBounds().size.x - getSize().x / 30.f,

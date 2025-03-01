@@ -14,7 +14,9 @@
 
 class Game {
 public:
-    Game();
+    //after creation of game, it needs to be assigned a player and a scoreboard instance
+    //this can't be done with a constructor because the player and scoreboard need a reference to the game object
+    Game(sf::RenderWindow *renderWindow);
 
     std::vector<Projectile> &getProjectiles();
 
@@ -24,10 +26,7 @@ public:
 
     Scoreboard &getScoreboard();
 
-    Player player;
-    std::vector<Projectile> projectiles;
-    std::vector<Monster> monsters;
-    Scoreboard scoreboard;
+    sf::RenderWindow *getRenderWindow() const;
 
     void spawnMonsters(int count);
 
@@ -39,6 +38,10 @@ public:
 
     void setScoreboard(const Scoreboard &scoreboard);
 
+    void tickProjectiles();
+
+    void tickMonsters();
+
     std::vector<Combatant *> getAllCombatants();
 
     void setGameOver();
@@ -47,7 +50,15 @@ public:
 
 protected:
 private:
+    Player player;
+    std::vector<Projectile> projectiles;
+    std::vector<Monster> monsters;
+    Scoreboard scoreboard;
     bool gameOver;
+
+    void setRenderWindow(sf::RenderWindow *pointer);
+
+    sf::RenderWindow *renderWindow;
 };
 
 
