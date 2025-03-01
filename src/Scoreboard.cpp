@@ -13,7 +13,7 @@ Scoreboard::Scoreboard() {
 Scoreboard::Scoreboard(sf::Vector2f position, sf::Vector2f size, sf::Color fillColor, float outlineThickness,
                        sf::Color outlineColor, Game *game) {
     if (!pressStart2PRegular.openFromFile("fonts/PressStart2P-Regular.ttf")) {
-        // TODO Error handling
+        throw std::runtime_error("Could not load font");
     }
     setPosition(position);
     setSize(size);
@@ -36,7 +36,7 @@ void Scoreboard::draw(sf::RenderWindow &window) {
     healthText.setCharacterSize(textSize);
     healthText.setFillColor(sf::Color::Red);
     healthText.setPosition({position.x + size.x / 30.f,
-                            position.y + size.y / 2.f - textSize / 2.f});
+                            position.y + size.y / 2.f - float(textSize) / 2.f});
 
     //health bar indicator
     sf::RectangleShape healthBar({std::max(0.f, playerHealth * 8.f), 20});
@@ -50,7 +50,7 @@ void Scoreboard::draw(sf::RenderWindow &window) {
     levelText.setCharacterSize(20);
     levelText.setFillColor(sf::Color::White);
     levelText.setPosition({position.x + size.x - levelText.getLocalBounds().size.x - size.x / 30.f,
-                           position.y + size.y / 2.f - textSize / 2.f});
+                           position.y + size.y / 2.f - float(textSize) / 2.f});
 
 
     //draw the scoreboard elements
@@ -76,7 +76,7 @@ void Scoreboard::draw(sf::RenderWindow &window) {
     level = value;
 }
 
-sf::Font Scoreboard::getPressStart2PRegular() {
+[[maybe_unused]] sf::Font Scoreboard::getPressStart2PRegular() {
     return pressStart2PRegular;
 }
 

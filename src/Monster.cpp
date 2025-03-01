@@ -18,7 +18,7 @@ Monster::Monster(sf::Vector2f size,
 
 void Monster::tick() {
     if (game == nullptr) {
-        return;
+        throw std::runtime_error("Monster has no game reference");
     }
 
 
@@ -55,7 +55,7 @@ void Monster::tick() {
 
 sf::Vector2f Monster::calculatePlayerDirection() {
     if (game == nullptr) {
-        return {0, 0};
+        throw std::runtime_error("Monster has no game reference");
     }
     return {
             game->getPlayer().getPosition() - getPosition()

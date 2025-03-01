@@ -15,11 +15,11 @@ void GameLoop::run() {
 
     //initialize game
     //the whole game class is used to collect entities of the game, so that passing the game reference to those entities enables them to access other elements of the game
-    Game *game = new Game(&window);
+    auto game = std::make_unique<Game>(&window);  // Using smart pointer
 
-    game->setPlayer(Player({10, 10}, {10, 10}, sf::RectangleShape({1280, 648}),
-                           3.f, sf::Color::White, 0, 100, 0, 0, game));
-    game->setScoreboard(Scoreboard({0, 648}, {1280, 72}, sf::Color::Black, -5, sf::Color(50, 50, 50), game));
+    game->setPlayer(Player({10, 10}, {10, 10}, sf::RectangleShape({1280, 647}),
+                           3.f, sf::Color::White, 0, 100, 0, 0, game.get()));
+    game->setScoreboard(Scoreboard({0, 648}, {1280, 72}, sf::Color::Black, -5, sf::Color(50, 50, 50), game.get()));
 
     while (window.isOpen()) {
         // Standard SFML event loop
@@ -38,9 +38,13 @@ void GameLoop::run() {
 
         //initialize and update level with monsters, give player a health reload, level up and buff if all monsters are dead
         if (game->getMonsters().empty()) {
+            //health reset
             game->getPlayer().setHealth(100);
+            //decrease reload time by 20 for each level
             game->getPlayer().setTotalReloadTime(std::max(10, (100 - game->getPlayer().getLevel() * 20)));
+            //level up
             game->getPlayer().setLevel(game->getPlayer().getLevel() + 1);
+            //spawn new monsters, dependent in count on the current player level
             game->spawnMonsters(game->getPlayer().getLevel() * 2 + 3);
         }
 
@@ -73,8 +77,6 @@ void GameLoop::run() {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::I)) {
 
         }
-
-
         window.display();
     }
 }

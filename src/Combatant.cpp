@@ -36,7 +36,7 @@ void Combatant::setHealth(float value) {
 
 void Combatant::shoot(sf::Vector2f projectileSize, int timeout, sf::Color color, float speed) {
     if (game == nullptr) {
-        return;
+        throw std::runtime_error("Combatant has no game reference");
     }
 
     //don't shoot if Combatant is reloading
@@ -191,7 +191,7 @@ void Combatant::setRemainingReloadTime(int value) {
 void Combatant::shootPrecisely(sf::Vector2f projectileSize, int timeout, sf::Color color, float speed,
                                sf::Vector2f projectileDirection) {
     if (game == nullptr) {
-        return;
+        throw std::runtime_error("Combatant has no game reference");
     }
 
     //don't shoot if Combatant is reloading

@@ -33,7 +33,7 @@ private:
 
     [[maybe_unused]] void setLevel(int value);
 
-    sf::Font getPressStart2PRegular();
+    [[maybe_unused]] sf::Font getPressStart2PRegular();
 
     [[maybe_unused]] void setPressStart2PRegular(const sf::Font &pointer);
 

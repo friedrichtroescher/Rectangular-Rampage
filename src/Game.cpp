@@ -3,6 +3,7 @@
 #include "include/Game.h"
 #include "include/Player.h"
 #include "include/Scoreboard.h"
+#include "include/Random.h"
 
 // Created by Friedrich Tröscher on 26.02.25.
 Game::Game(sf::RenderWindow *renderWindow) {
@@ -63,24 +64,27 @@ void Game::spawnMonsters(int count) {
     if (count <= 0) {
         return;
     }
+    Random random;
+
     //monsters get smaller up until level 10, then they stay at a minimum size of 10
     float monsterSize = std::max(10.f, (15 - (float(player.getLevel()) * 0.5f)));
 
     for (int i = 0; i < count; i++) {
         sf::RectangleShape movementBounds = player.getMovementBounds();
         sf::Vector2f bottomRightBound = movementBounds.getPoint(2);
-        float playerLevel = float(player.getLevel());
+        auto playerLevel = float(player.getLevel());
 
         //the Player level is used as a multiplier in some fields to make the game harder with increasing levels
         //the coordinates in the monster initialization are cast to int to enable the modulo operation
         monsters.push_back(
-                Monster({monsterSize, monsterSize}, {float((rand() % int(bottomRightBound.x))),
-                                                     float((rand() % int(bottomRightBound.y)))},
+                Monster({monsterSize, monsterSize}, {float((random.generate() % int(bottomRightBound.x))),
+                                                     float((random.generate() % int(bottomRightBound.y)))},
                         movementBounds,
-                        (0.5 + (rand() % 100) / 400.f), sf::Color::Green, 100, playerLevel * 3.f + 1.5,
-                        std::max(120.f, 260.f - 20 * playerLevel), this));
+                        (0.5 + (random.generate() % 100) / 400.f), sf::Color::Green, 100,
+                        float(playerLevel * 3.f + 1.5),
+                        std::max(120, int(260.f - 20 * playerLevel)), this));
         //to make monsters not shoot all at the same time, they are initialized with a randomized initial reload time
-        monsters[i].setRemainingReloadTime(rand() % monsters[i].getTotalReloadTime());
+        monsters[i].setRemainingReloadTime(random.generate() % monsters[i].getTotalReloadTime());
     }
 }
 
