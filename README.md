@@ -1,7 +1,7 @@
 # Rectangular Rampage
 
-This repository is a project work for the 4th Semester Course "Programming in C++", lectured by David Hackbart at
-Hochschule für Wirtschaft und Recht Berlin
+This repository is a project work for the 4th Semester Computer Science Course "Programming in C++", lectured by David
+Hackbart at Hochschule für Wirtschaft und Recht Berlin.
 
 ## How to Build and Run
 
