@@ -30,11 +30,11 @@ void Game::setPlayer(const Player &pointer) {
     player = pointer;
 }
 
-void Game::setProjectiles(const std::vector<Projectile> &pointer) {
+[[maybe_unused]] void Game::setProjectiles(const std::vector<Projectile> &pointer) {
     projectiles = pointer;
 }
 
-void Game::setMonsters(const std::vector<Monster> &pointer) {
+[[maybe_unused]] void Game::setMonsters(const std::vector<Monster> &pointer) {
     monsters = pointer;
 }
 
@@ -67,15 +67,18 @@ void Game::spawnMonsters(int count) {
     float monsterSize = std::max(10.f, (15 - (float(player.getLevel()) * 0.5f)));
 
     for (int i = 0; i < count; i++) {
-        MovementBounds movementBounds = player.getBounds();
+        sf::RectangleShape movementBounds = player.getMovementBounds();
+        sf::Vector2f bottomRightBound = movementBounds.getPoint(2);
+        float playerLevel = float(player.getLevel());
+
         //the Player level is used as a multiplier in some fields to make the game harder with increasing levels
+        //the coordinates in the monster initialization are cast to int to enable the modulo operation
         monsters.push_back(
-                Monster({monsterSize, monsterSize}, {float((rand() % int(movementBounds.getBottomRightBound().x))),
-                                                     float((rand() % int(movementBounds.getBottomRightBound().y)))},
-                        MovementBounds({0, 0},
-                                       {1280, 648}),
-                        (0.5 + (rand() % 100) / 400.f), sf::Color::Green, 100, float(player.getLevel()) * 3.f + 1.5,
-                        120, this));
+                Monster({monsterSize, monsterSize}, {float((rand() % int(bottomRightBound.x))),
+                                                     float((rand() % int(bottomRightBound.y)))},
+                        movementBounds,
+                        (0.5 + (rand() % 100) / 400.f), sf::Color::Green, 100, playerLevel * 3.f + 1.5,
+                        std::max(120.f, 260.f - 20 * playerLevel), this));
         //to make monsters not shoot all at the same time, they are initialized with a randomized initial reload time
         monsters[i].setRemainingReloadTime(rand() % monsters[i].getTotalReloadTime());
     }
@@ -113,7 +116,7 @@ void Game::tickProjectiles() {
     }
 }
 
-void Game::tickMonsters() {
+[[maybe_unused]] void Game::tickMonsters() {
 
 }
 

@@ -32,15 +32,15 @@ public:
 
     void setPlayer(const Player &player);
 
-    void setProjectiles(const std::vector<Projectile> &projectiles);
+    [[maybe_unused]] void setProjectiles(const std::vector<Projectile> &projectiles);
 
-    void setMonsters(const std::vector<Monster> &monsters);
+    [[maybe_unused]] void setMonsters(const std::vector<Monster> &monsters);
 
     void setScoreboard(const Scoreboard &scoreboard);
 
     void tickProjectiles();
 
-    void tickMonsters();
+    [[maybe_unused]] void tickMonsters();
 
     std::vector<Combatant *> getAllCombatants();
 

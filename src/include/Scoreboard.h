@@ -21,8 +21,27 @@ public:
 protected:
 private:
     float health{};
+
     int level{};
+
     sf::Font pressStart2PRegular;
+
+    [[maybe_unused]] float getHealth() const;
+
+    [[maybe_unused]] void setHealth(float value);
+
+    [[maybe_unused]] int getLevel() const;
+
+    [[maybe_unused]] void setLevel(int value);
+
+    sf::Font getPressStart2PRegular();
+
+    [[maybe_unused]] void setPressStart2PRegular(const sf::Font &pointer);
+
+    Game *getGame() const;
+
+    void setGame(Game *pointer);
+
     Game *game;
 };
 

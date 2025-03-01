@@ -14,14 +14,14 @@ public:
 
     Monster(sf::Vector2f size,
             sf::Vector2f position,
-            MovementBounds movementBounds,
+            sf::RectangleShape movementBounds,
             float walkingSpeed,
             sf::Color color,
             float health, float damage, int totalReloadTime, Game *game);
 
     void tick() override;
 
-    Combatant::Type getType();
+    Combatant::Type getType() override;
 
 protected:
 private:

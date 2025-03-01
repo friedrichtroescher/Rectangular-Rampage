@@ -22,8 +22,6 @@ add_executable(main src/main.cpp
         src/include/Direction.h
         src/Input.cpp
         src/include/Input.h
-        src/MovementBounds.cpp
-        src/include/MovementBounds.h
         src/Scoreboard.cpp
         src/include/Scoreboard.h
         src/Combatant.cpp

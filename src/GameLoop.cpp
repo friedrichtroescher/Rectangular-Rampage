@@ -6,9 +6,6 @@
 #include <SFML/Graphics.hpp>
 #include <algorithm>
 #include "include/Player.h"
-#include "include/Combatant.h"
-#include "include/Projectile.h"
-#include "include/Monster.h"
 #include "include/Game.h"
 
 void GameLoop::run() {
@@ -20,8 +17,7 @@ void GameLoop::run() {
     //the whole game class is used to collect entities of the game, so that passing the game reference to those entities enables them to access other elements of the game
     Game *game = new Game(&window);
 
-    game->setPlayer(Player({10, 10}, {10, 10}, MovementBounds({0, 0},
-                                                              {1280, 648}),
+    game->setPlayer(Player({10, 10}, {10, 10}, sf::RectangleShape({1280, 648}),
                            3.f, sf::Color::White, 0, 100, 0, 0, game));
     game->setScoreboard(Scoreboard({0, 648}, {1280, 72}, sf::Color::Black, -5, sf::Color(50, 50, 50), game));
 

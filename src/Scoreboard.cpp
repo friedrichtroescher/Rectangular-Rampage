@@ -8,21 +8,11 @@
 
 
 Scoreboard::Scoreboard() {
-//    setHealth(100);
-//    setLevel(1);
-//    setSize({1280, 72});
-//    setOutlineColor(sf::Color(100, 100, 100, 255));
-//    setFillColor(sf::Color::Black);
-//    setOutlineThickness(-5);
-//
-//    if (!pressStart2PRegular.openFromFile("fonts/PressStart2P-Regular.ttf")) {
-//        // TODO Error handling
-//    }
 }
 
 Scoreboard::Scoreboard(sf::Vector2f position, sf::Vector2f size, sf::Color fillColor, float outlineThickness,
                        sf::Color outlineColor, Game *game) {
-    if (!pressStart2PRegular.openFromFile("fonts/PressStart2P-Regular.ttf")) {
+    if (!getPressStart2PRegular().openFromFile("fonts/PressStart2P-Regular.ttf")) {
         // TODO Error handling
     }
     setPosition(position);
@@ -30,39 +20,74 @@ Scoreboard::Scoreboard(sf::Vector2f position, sf::Vector2f size, sf::Color fillC
     setFillColor(fillColor);
     setOutlineColor(outlineColor);
     setOutlineThickness(outlineThickness);
-    this->game = game;
+    setGame(game);
 }
 
 
 void Scoreboard::draw(sf::RenderWindow &window) {
-
-    //outline
-    window.draw(*this);
+    //variables that are used multiple times in the following calculations
+    sf::Vector2f position = getPosition();
+    sf::Vector2f size = getSize();
+    unsigned int textSize = 20;
+    float playerHealth = getGame()->getPlayer().getHealth();
 
     //health bar text
     sf::Text healthText(pressStart2PRegular, "Health: ");
-    healthText.setCharacterSize(20);
+    healthText.setCharacterSize(textSize);
     healthText.setFillColor(sf::Color::Red);
-    healthText.setPosition({getPosition().x + getSize().x / 30.f,
-                            getPosition().y + getSize().y / 2.f - healthText.getCharacterSize() / 2.f});
+    healthText.setPosition({position.x + size.x / 30.f,
+                            position.y + size.y / 2.f - textSize / 2.f});
 
     //health bar indicator
-    sf::RectangleShape healthBar({std::max(0.f, float(game->getPlayer().getHealth()) * 8.f), 20});
+    sf::RectangleShape healthBar({std::max(0.f, playerHealth * 8.f), 20});
     healthBar.setPosition(
-            {getPosition().x + healthText.getLocalBounds().size.x + healthText.getLocalBounds().size.x / 5,
-             getPosition().y + getSize().y / 2.f - healthBar.getSize().y / 2.f});
+            {position.x + healthText.getLocalBounds().size.x + healthText.getLocalBounds().size.x / 5,
+             position.y + size.y / 2.f - healthBar.getSize().y / 2.f});
     healthBar.setFillColor(sf::Color::Red);
 
     //Level indicator
-    sf::Text levelText(pressStart2PRegular, "Level: " + std::to_string(game->getPlayer().getLevel()));
+    sf::Text levelText(pressStart2PRegular, "Level: " + std::to_string(getGame()->getPlayer().getLevel()));
     levelText.setCharacterSize(20);
     levelText.setFillColor(sf::Color::White);
-    levelText.setPosition({getPosition().x + getSize().x - levelText.getLocalBounds().size.x - getSize().x / 30.f,
-                           getPosition().y + getSize().y / 2.f - levelText.getCharacterSize() / 2.f});
+    levelText.setPosition({position.x + size.x - levelText.getLocalBounds().size.x - size.x / 30.f,
+                           position.y + size.y / 2.f - textSize / 2.f});
 
 
-    //draw the above initialized scoreboard elements
+    //draw the scoreboard elements
+    window.draw(*this); //the outline
     window.draw(healthText);
     window.draw(healthBar);
     window.draw(levelText);
+}
+
+[[maybe_unused]] float Scoreboard::getHealth() const {
+    return health;
+}
+
+[[maybe_unused]] void Scoreboard::setHealth(float value) {
+    health = value;
+}
+
+[[maybe_unused]] int Scoreboard::getLevel() const {
+    return level;
+}
+
+[[maybe_unused]] void Scoreboard::setLevel(int value) {
+    level = value;
+}
+
+sf::Font Scoreboard::getPressStart2PRegular() {
+    return pressStart2PRegular;
+}
+
+[[maybe_unused]] void Scoreboard::setPressStart2PRegular(const sf::Font &pointer) {
+    pressStart2PRegular = pointer;
+}
+
+Game *Scoreboard::getGame() const {
+    return game;
+}
+
+void Scoreboard::setGame(Game *pointer) {
+    game = pointer;
 }

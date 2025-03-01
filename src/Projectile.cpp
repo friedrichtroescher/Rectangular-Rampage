@@ -14,7 +14,7 @@ Projectile::Projectile(sf::Vector2f size, sf::Vector2f position, sf::Color color
     setFillColor(color);
     setVelocity(velocity);
     setTimeout(timeout);
-    this->game = game;
+    setGame(game);
     setShotBy(shotBy);
     setDamage(damage);
 }
@@ -77,4 +77,12 @@ void Projectile::setDamage(float value) {
     } else {
         damage = 0.f;
     }
+}
+
+Game *Projectile::getGame() const {
+    return game;
+}
+
+void Projectile::setGame(Game *pointer) {
+    game = pointer;
 }

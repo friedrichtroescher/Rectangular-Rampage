@@ -13,7 +13,8 @@ public:
     Player();
 
     //Constructor
-    Player(sf::Vector2f size, sf::Vector2f position, MovementBounds movementBounds, float walkingSpeed, sf::Color color,
+    Player(sf::Vector2f size, sf::Vector2f position, sf::RectangleShape movementBounds, float walkingSpeed,
+           sf::Color color,
            float health, float damage, int totalReloadTime, int level, Game *game);
 
 

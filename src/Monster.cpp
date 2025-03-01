@@ -9,13 +9,12 @@ Monster::Monster() : Combatant() {}
 
 Monster::Monster(sf::Vector2f size,
                  sf::Vector2f position,
-                 MovementBounds movementBounds,
+                 sf::RectangleShape movementBounds,
                  float walkingSpeed,
                  sf::Color color,
                  float health, float damage, int totalReloadTime, Game *game)
         :
-        Combatant(size, position, movementBounds, walkingSpeed, color, health, damage, totalReloadTime, game) {
-};
+        Combatant(size, position, movementBounds, walkingSpeed, color, health, damage, totalReloadTime, game) {}
 
 void Monster::tick() {
     if (game == nullptr) {

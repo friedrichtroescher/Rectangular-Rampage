@@ -6,9 +6,8 @@
 //
 // Created by Friedrich Tröscher on 15.02.25.
 
-Combatant::Combatant(sf::Vector2f size, sf::Vector2f position, MovementBounds movementBounds, float walkingSpeed,
-                     sf::Color color, float health, float damage, int totalReloadTime, Game *game)
-        : MovementBounds(movementBounds) {
+Combatant::Combatant(sf::Vector2f size, sf::Vector2f position, sf::RectangleShape movementBounds, float walkingSpeed,
+                     sf::Color color, float health, float damage, int totalReloadTime, Game *game) {
 
     setSize(size);
     setPosition(position);
@@ -18,6 +17,7 @@ Combatant::Combatant(sf::Vector2f size, sf::Vector2f position, MovementBounds mo
     setDirection(Direction::NONE);
     setDamage(damage);
     setTotalReloadTime(totalReloadTime);
+    setMovementBounds(movementBounds);
     this->game = game;
 }
 
@@ -63,11 +63,11 @@ void Combatant::setDirection(Direction value) {
     direction = value;
 }
 
-void Combatant::walk(Direction direction, float distance) {
-    //set the direction field for later use, e.g. for shooting (or maybe a direction indicator?)
-    setDirection(direction);
+void Combatant::walk(Direction walkingDirection, float distance) {
+    //set the walkingDirection field for later use, e.g. for shooting (or maybe a walkingDirection indicator?)
+    setDirection(walkingDirection);
 
-    float boundDistance = this->boundDistance(direction);
+    float boundDistance = this->boundDistance(walkingDirection);
     if (boundDistance < distance) {
         distance = boundDistance;
     }
@@ -78,8 +78,8 @@ void Combatant::walk(Direction direction, float distance) {
 
     auto sqrt2 = float(sqrt(2)); //float precision is enough for moving these rectangles :D
 
-    //move the targetedPlayer in the given direction
-    switch (direction) {
+    //move the targetedPlayer in the given walkingDirection
+    switch (walkingDirection) {
         case Direction::UP:
             move({0, -distance});
             break;
@@ -110,16 +110,19 @@ void Combatant::walk(Direction direction, float distance) {
 }
 
 
-float Combatant::boundDistance(Direction direction) {
-    auto topLeftBound = getTopLeftBound();
-    auto bottomRightBound = getBottomRightBound();
+float Combatant::boundDistance(Direction boundDirectionFromCombatant) {
+    sf::RectangleShape currentMovementBounds = getMovementBounds();
 
-    auto playerTopLeft = getPosition();
-    auto playerTopRight = getPosition() + sf::RectangleShape::getPoint(1);
-    auto playerBottomRight = getPosition() + sf::RectangleShape::getPoint(2);
-    auto playerBottomLeft = getPosition() + sf::RectangleShape::getPoint(3);
+    auto topLeftBound = currentMovementBounds.getPoint(0);
+    auto bottomRightBound = currentMovementBounds.getPoint(2);
 
-    switch (direction) {
+    sf::Vector2f combatantPosition = getPosition();
+    auto playerTopLeft = combatantPosition;
+    auto playerTopRight = combatantPosition + sf::RectangleShape::getPoint(1);
+    auto playerBottomRight = combatantPosition + sf::RectangleShape::getPoint(2);
+    auto playerBottomLeft = combatantPosition + sf::RectangleShape::getPoint(3);
+
+    switch (boundDirectionFromCombatant) {
         case Direction::UP:
             return playerTopLeft.y - topLeftBound.y;
         case Direction::UP_RIGHT:
@@ -145,7 +148,7 @@ float Combatant::getWalkingSpeed() {
     return walkingSpeed;
 }
 
-float Combatant::setWalkingSpeed(float value) {
+void Combatant::setWalkingSpeed(float value) {
     walkingSpeed = value;
 }
 
@@ -186,7 +189,7 @@ void Combatant::setRemainingReloadTime(int value) {
 }
 
 void Combatant::shootPrecisely(sf::Vector2f projectileSize, int timeout, sf::Color color, float speed,
-                               sf::Vector2f projectileMovement) {
+                               sf::Vector2f projectileDirection) {
     if (game == nullptr) {
         return;
     }
@@ -196,6 +199,10 @@ void Combatant::shootPrecisely(sf::Vector2f projectileSize, int timeout, sf::Col
         return;
     }
 
+    //calculate the movement vector from speed and projectileDirection
+    sf::Vector2f projectileVector = DirectionUtils::getNormalizedVector(projectileDirection) * speed;
+
+
     Projectile projectile = (Projectile(projectileSize, {getPosition().x + (getSize().x -
                                                                             projectileSize.x) /
                                                                            2.f,
@@ -203,7 +210,7 @@ void Combatant::shootPrecisely(sf::Vector2f projectileSize, int timeout, sf::Col
                                                                             projectileSize.y) /
                                                                            2.f},
                                         color,
-                                        projectileMovement, timeout, Combatant::Type::Monster, getDamage(), game));
+                                        projectileVector, timeout, Combatant::Type::Monster, getDamage(), game));
 
     game->getProjectiles().push_back(projectile);
 
@@ -211,22 +218,32 @@ void Combatant::shootPrecisely(sf::Vector2f projectileSize, int timeout, sf::Col
     setRemainingReloadTime(getTotalReloadTime());
 }
 
+// default constructor is needed for the game class.
 Combatant::Combatant() {
-    setSize({10, 10});
+    setSize({0, 0});
     setPosition({0, 0});
     setFillColor(sf::Color::White);
-    setHealth(100);
-    setWalkingSpeed(1);
+    setHealth(0);
+    setWalkingSpeed(0);
     setDirection(Direction::NONE);
-    setDamage(1);
-    setTotalReloadTime(1);
+    setDamage(0);
+    setTotalReloadTime(0);
+    setMovementBounds(sf::RectangleShape({0, 0}));
     setGame(nullptr);
 }
 
-Game *Combatant::getGame() const {
+[[maybe_unused]] Game *Combatant::getGame() const {
     return game;
 }
 
-void Combatant::setGame(Game *game) {
-    Combatant::game = game;
+void Combatant::setGame(Game *pointer) {
+    game = pointer;
+}
+
+const sf::RectangleShape &Combatant::getMovementBounds() const {
+    return movementBounds;
+}
+
+void Combatant::setMovementBounds(const sf::RectangleShape rectangleShape) {
+    movementBounds = rectangleShape;
 }

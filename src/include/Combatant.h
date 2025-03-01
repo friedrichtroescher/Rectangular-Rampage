@@ -6,7 +6,6 @@
 #define CMAKESFMLPROJECT_COMBATANT_H
 
 #include <SFML/Graphics/RectangleShape.hpp>
-#include "MovementBounds.h"
 #include "Direction.h"
 
 
@@ -15,7 +14,7 @@ class Game;
 
 class Projectile;
 
-class Combatant : public sf::RectangleShape, public MovementBounds {
+class Combatant : public sf::RectangleShape {
 public:
     enum class Type {
         Player, Monster, Unknown
@@ -41,15 +40,15 @@ public:
 
     void setDirection(Direction value);
 
-    float setWalkingSpeed(float value);
+    void setWalkingSpeed(float value);
 
     void setDamage(float value);
 
     virtual void tick() = 0;
 
-    void walk(Direction direction, float distance);
+    void walk(Direction walkingDirection, float distance);
 
-    float boundDistance(Direction direction);
+    float boundDistance(Direction boundDirectionFromCombatant);
 
     //shoots a projectile in the direction the Combatant is facing, this is not precise
     void shoot(sf::Vector2f projectileSize, int timeout, sf::Color color, float speed);
@@ -57,18 +56,18 @@ public:
     //shoots a projectile in the direction specified by projectileMovement, adjusted to speed specified
     //this was implemented to allow Monsters to target the player precisely, but could be implemented for the player as well
     void shootPrecisely(sf::Vector2f projectileSize, int timeout, sf::Color color, float speed, sf::Vector2f
-    projectileMovement);
+    projectileDirection);
 
     void setRemainingReloadTime(int value);
 
-    Game *getGame() const;
+    [[maybe_unused]] Game *getGame() const;
 
-    void setGame(Game *game);
+    void setGame(Game *pointer);
 
 protected:
     Combatant();
 
-    Combatant(sf::Vector2f size, sf::Vector2f position, MovementBounds movementBounds, float walkingSpeed,
+    Combatant(sf::Vector2f size, sf::Vector2f position, sf::RectangleShape movementBounds, float walkingSpeed,
               sf::Color color,
               float health, float damage, int totalReloadTime, Game *game);
 
@@ -78,6 +77,13 @@ protected:
     int totalReloadTime{};
     Direction direction;
     float walkingSpeed{};
+    sf::RectangleShape movementBounds;
+public:
+    const RectangleShape &getMovementBounds() const;
+
+    void setMovementBounds(const RectangleShape rectangleShape);
+
+protected:
     //pointer to the game object, so that the Combatant can interact with other game elements
     Game *game;
 private:
