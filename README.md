@@ -1,5 +1,7 @@
 # Rectangular Rampage
 
+A minimalist, top-down retro shooter featuring wave-based gameplay.
+
 This repository is a project work for the 4th Semester Computer Science Course "Programming in C++", lectured by David
 Hackbart at Hochschule für Wirtschaft und Recht Berlin.
 
