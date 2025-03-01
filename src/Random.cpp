@@ -18,7 +18,7 @@ int Random::generate() {
 }
 
 // Function to generate an integer in range [min, max)
-int Random::generate_range(int min, int max) {
+[[maybe_unused]] int Random::generate_range(int min, int max) {
     if (min >= max) {
         throw std::invalid_argument("min must be less than max");
     }

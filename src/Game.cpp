@@ -88,7 +88,7 @@ void Game::spawnMonsters(int count) {
     }
 }
 
-void Game::tickProjectiles() {
+void Game::tickAndDrawProjectiles() {
     // update projectiles
     for (auto &projectile: projectiles) {
         auto new_end = std::remove_if(projectiles.begin(), projectiles.end(),
@@ -116,6 +116,8 @@ void Game::tickProjectiles() {
         projectile.setTimeout(projectile.getTimeout() - 1);
 
         projectile.move(projectile.getVelocity());
+
+        //draw each projectile into the current frame
         getRenderWindow()->draw(projectile);
     }
 }

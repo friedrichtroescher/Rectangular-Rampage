@@ -37,7 +37,7 @@ public:
 
     void setScoreboard(const Scoreboard &scoreboard);
 
-    void tickProjectiles();
+    void tickAndDrawProjectiles();
 
     [[maybe_unused]] void tickMonsters();
 

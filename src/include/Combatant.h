@@ -21,17 +21,17 @@ public:
 
     virtual Combatant::Type getType() = 0;
 
-    float getHealth();
+    float getHealth() const;
 
     Direction getDirection();
 
-    float getWalkingSpeed();
+    float getWalkingSpeed() const;
 
-    int getRemainingReloadTime();
+    int getRemainingReloadTime() const;
 
-    int getTotalReloadTime();
+    int getTotalReloadTime() const;
 
-    float getDamage();
+    float getDamage() const;
 
     void setTotalReloadTime(int value);
 
@@ -80,7 +80,7 @@ protected:
 public:
     const RectangleShape &getMovementBounds() const;
 
-    void setMovementBounds(const RectangleShape rectangleShape);
+    void setMovementBounds(const RectangleShape& rectangleShape);
 
 protected:
     //pointer to the game object, so that the Combatant can interact with other game elements

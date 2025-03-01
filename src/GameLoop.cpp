@@ -21,8 +21,8 @@ void GameLoop::run() {
                            3.f, sf::Color::White, 0, 100, 0, 0, game.get()));
     game->setScoreboard(Scoreboard({0, 648}, {1280, 72}, sf::Color::Black, -5, sf::Color(50, 50, 50), game.get()));
 
+    //loop for the game
     while (window.isOpen()) {
-        // Standard SFML event loop
         while (const std::optional event = window.pollEvent()) {
             if (event->is<sf::Event::Closed>()) {
                 window.close();
@@ -30,6 +30,7 @@ void GameLoop::run() {
         }
 
         if (game->getGameOver()) {
+            //show the last frame until the window is closed
             continue;
         }
 
@@ -48,7 +49,7 @@ void GameLoop::run() {
             game->spawnMonsters(game->getPlayer().getLevel() * 2 + 3);
         }
 
-        game->tickProjectiles();
+        game->tickAndDrawProjectiles();
 
         //Movement, shooting update for targetedPlayer
         game->getPlayer().tick();
@@ -57,7 +58,7 @@ void GameLoop::run() {
         //no need to do a scoreboard tick, scoreboard knows about the game object and retrieves values by itself
         game->getScoreboard().draw(window);
 
-        //handle monster vector
+        //handle each monster from the monster vector
         for (size_t index = 0; index < game->getMonsters().size(); /* no increment here */) {
             auto &monster = game->getMonsters()[index];
 
@@ -72,11 +73,6 @@ void GameLoop::run() {
             }
         }
 
-
-        //debug point when pressing i
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::I)) {
-
-        }
         window.display();
     }
 }

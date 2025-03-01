@@ -23,7 +23,7 @@ Scoreboard::Scoreboard(sf::Vector2f position, sf::Vector2f size, sf::Color fillC
     setGame(game);
 }
 
-
+//This method draws the complete scoreboard, including the health bar and the level indicator
 void Scoreboard::draw(sf::RenderWindow &window) {
     //variables that are used multiple times in the following calculations
     sf::Vector2f position = getPosition();

@@ -13,7 +13,7 @@ public:
 
     int generate();
 
-    int generate_range(int min, int max);
+    [[maybe_unused]] int generate_range(int min, int max);
 
 private:
     std::mt19937 rng;

@@ -7,7 +7,7 @@
 Direction DirectionUtils::getDirectionFromVector(sf::Vector2f vector) {
     float radian = atan2(vector.y, vector.x);
 
-    //using the radian, we roughly determine the direction (based on the circle divided in 8 parts)
+    //using the radian, this roughly determines the direction (based on the circle divided in 8 parts)
 
     if (radian >= -M_PI / 8 && radian < M_PI / 8) {
         return Direction::RIGHT;

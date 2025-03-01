@@ -1,5 +1,7 @@
 //
 
+#include <utility>
+
 #include "include/Combatant.h"
 #include "include/Projectile.h"
 #include "include/Game.h"
@@ -17,11 +19,11 @@ Combatant::Combatant(sf::Vector2f size, sf::Vector2f position, sf::RectangleShap
     setDirection(Direction::NONE);
     setDamage(damage);
     setTotalReloadTime(totalReloadTime);
-    setMovementBounds(movementBounds);
+    setMovementBounds(std::move(movementBounds));
     this->game = game;
 }
 
-float Combatant::getHealth() {
+float Combatant::getHealth() const {
     return health;
 }
 
@@ -44,6 +46,7 @@ void Combatant::shoot(sf::Vector2f projectileSize, int timeout, sf::Color color,
         return;
     }
 
+    //create a new projectile
     Projectile projectile = (Projectile(projectileSize, {getPosition().x + (getSize().x -
                                                                             projectileSize.x) /
                                                                            2.f,
@@ -53,6 +56,8 @@ void Combatant::shoot(sf::Vector2f projectileSize, int timeout, sf::Color color,
                                         color,
                                         Projectile::generateFixedDirectionVelocity(getDirection(), speed),
                                         timeout, getType(), getDamage(), game));
+
+    //and add it to the game's projectile list
     game->getProjectiles().push_back(projectile);
 
     //start the reload timer
@@ -144,7 +149,7 @@ float Combatant::boundDistance(Direction boundDirectionFromCombatant) {
     }
 }
 
-float Combatant::getWalkingSpeed() {
+float Combatant::getWalkingSpeed() const {
     return walkingSpeed;
 }
 
@@ -152,7 +157,7 @@ void Combatant::setWalkingSpeed(float value) {
     walkingSpeed = value;
 }
 
-float Combatant::getDamage() {
+float Combatant::getDamage() const {
     return damage;
 }
 
@@ -164,11 +169,11 @@ void Combatant::setDamage(float value) {
     }
 }
 
-int Combatant::getTotalReloadTime() {
+int Combatant::getTotalReloadTime() const {
     return totalReloadTime;
 }
 
-int Combatant::getRemainingReloadTime() {
+int Combatant::getRemainingReloadTime() const {
     return remainingReloadTime;
 }
 
@@ -244,6 +249,6 @@ const sf::RectangleShape &Combatant::getMovementBounds() const {
     return movementBounds;
 }
 
-void Combatant::setMovementBounds(const sf::RectangleShape rectangleShape) {
+void Combatant::setMovementBounds(const sf::RectangleShape& rectangleShape) {
     movementBounds = rectangleShape;
 }

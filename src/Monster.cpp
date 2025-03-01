@@ -21,8 +21,6 @@ void Monster::tick() {
         throw std::runtime_error("Monster has no game reference");
     }
 
-
-
     //update Monster shooting timeout and animation
     if (remainingReloadTime > 0) {
         remainingReloadTime--;
@@ -35,18 +33,16 @@ void Monster::tick() {
                 255);
         setFillColor(reloadingColor);
     } else {
-        float projectileSpeed = 3;
-        sf::Vector2f projectileVector = DirectionUtils::getNormalizedVector(calculatePlayerDirection()) *
-                                        projectileSpeed;
-
+        //if the monster is not reloading, it shoots in a precise direction (not just the 8 directions the player can shoot in) at the player
+        //the shootPrecisely method takes care of normalizing the direction vector and multiplying it by the speed
         shootPrecisely({5, 5}, 120, sf::Color::Green, 5,
-                       projectileVector);
+                       calculatePlayerDirection());
     }
 
-    sf::Vector2f playerDirection = calculatePlayerDirection();
 
     //move the Monster towards the player if it is further than 5x player size away
     //Assumes square player
+    sf::Vector2f playerDirection = calculatePlayerDirection();
     if (DirectionUtils::getDistanceFromVector(playerDirection) > 5 * game->getPlayer().getSize().x) {
         walk(DirectionUtils::getDirectionFromVector(playerDirection), getWalkingSpeed());
     }

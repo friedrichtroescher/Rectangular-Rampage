@@ -35,6 +35,8 @@ void Projectile::setTimeout(int value) {
     timeout = value;
 }
 
+//this function returns a velocity vector based on the direction and speed. It takes into account the diagonal directions and their respective speeds
+//Remember Pythagoras? Neither do I. Kidding.
 sf::Vector2f Projectile::generateFixedDirectionVelocity(Direction direction, float speed) {
     auto sqrt2 = float(sqrt(2));
     switch (direction) {
@@ -71,6 +73,7 @@ float Projectile::getDamage() const {
     return damage;
 }
 
+//don't allow negative damage values
 void Projectile::setDamage(float value) {
     if (damage >= 0) {
         damage = value;

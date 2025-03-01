@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include "include/Input.h"
 
+//this helper function returns the direction of the player based on the pressed keys, it accepts both WASD and arrow keys
 Direction Input::getWASDDirection() {
     const bool up =
             sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W);
@@ -35,6 +36,7 @@ Direction Input::getWASDDirection() {
     return Direction::NONE;
 }
 
+//similarly, for shooting both space and left mouse button are accepted
 bool Input::isShooting() {
     return sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) || sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
 }
